@@ -3,6 +3,7 @@ import React from 'react';
 import {
   AppBar,
   Box,
+  Button,
   IconButton,
   makeStyles,
   Theme,
@@ -23,12 +24,16 @@ export const NavBar = ({ children, tabBar }: NavBarProps) => {
   return (
     <>
       <AppBar position="sticky">
-        <Toolbar>
-          <IconButton edge="start">
-            <MenuIcon />
-          </IconButton>
+        <Toolbar className={classes.toolbar}>
+          <Box display="flex" alignItems="center">
+            <IconButton edge="start">
+              <MenuIcon />
+            </IconButton>
 
-          <Typography variant="h6">NavBar</Typography>
+            <Typography variant="h6">NavBar</Typography>
+          </Box>
+
+          <Button variant="contained">Go To Favorites</Button>
         </Toolbar>
 
         {tabBar && <TabBar />}
@@ -40,5 +45,6 @@ export const NavBar = ({ children, tabBar }: NavBarProps) => {
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
-  main: {}
+  main: {},
+  toolbar: { display: 'flex', justifyContent: 'space-between' }
 }));

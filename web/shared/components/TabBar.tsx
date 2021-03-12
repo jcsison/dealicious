@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { AppBar, makeStyles, Tab, Tabs, Theme } from '@material-ui/core';
+import {
+  AppBar,
+  Box,
+  Button,
+  makeStyles,
+  Tab,
+  Tabs,
+  Theme,
+  Typography
+} from '@material-ui/core';
 
 export const TabBar = () => {
   const classes = useStyles();
@@ -11,14 +20,22 @@ export const TabBar = () => {
   };
 
   return (
-    <Tabs value={currentTab} onChange={handleChangeTab}>
-      <Tab label="Topic One" />
-      <Tab label="Topic Two" />
-      <Tab label="Topic Three" />
-    </Tabs>
+    <>
+      <Box className={classes.box} pr={5.5}>
+        <Tabs value={currentTab} onChange={handleChangeTab}>
+          <Tab label="Topic One" />
+          <Tab label="Topic Two" />
+          <Tab label="Topic Three" />
+        </Tabs>
+        <Box>
+          <Button variant="contained">New Topic</Button>
+        </Box>
+      </Box>
+    </>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
-  main: {}
+  main: {},
+  box: { display: 'flex', justifyContent: 'space-between' }
 }));

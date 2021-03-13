@@ -1,8 +1,16 @@
 import Head from 'next/head';
 import React from 'react';
-import { Box, Button, makeStyles, Theme, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  makeStyles,
+  Paper,
+  Theme,
+  Typography
+} from '@material-ui/core';
 
 import { NavBar } from '../../shared/components/NavBar';
+import { ProductCard } from './components/ProductCard';
 
 export const Dashboard = () => {
   const classes = useStyles();
@@ -20,24 +28,26 @@ export const Dashboard = () => {
           </Box>
           <Button>Add Filter</Button>
         </Box>
-        <Box
-          alignItems="center"
-          className={classes.main}
-          display="flex"
-          height="50vh"
-          justifyContent="center"
-        >
-          <Box>Dashboard</Box>
-        </Box>
+        <Paper elevation={3} variant="outlined">
+          <Box
+            alignItems="center"
+            display="flex"
+            justifyContent="center"
+            flexWrap="wrap"
+            overflow="auto"
+            maxHeight="70vh"
+          >
+            <Box p={2}>
+              <ProductCard />
+            </Box>
+          </Box>
+        </Paper>
       </NavBar>
     </>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
-  main: {
-    backgroundColor: 'red'
-  },
   filterBox: {
     display: 'flex',
     justifyContent: 'space-around'

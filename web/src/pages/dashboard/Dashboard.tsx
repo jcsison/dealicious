@@ -10,7 +10,7 @@ export const Dashboard = () => {
   return (
     <>
       <Head>
-        <title>Dashboard</title>
+        <title>Dashboard | Dealicious</title>
       </Head>
 
       <NavBar tabBar>
@@ -43,3 +43,5 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'space-around'
   }
 }));
+
+export default Dashboard;

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Button,
@@ -8,12 +8,23 @@ import {
   Theme,
   Typography
 } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { NavBar } from '../../shared/components/NavBar';
 import { ProductCard } from './components/ProductCard';
+import { RootState } from '../../redux/store';
+import { getProductsThunk } from '../../redux/thunk/thunks';
 
 export const Dashboard = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const products = useSelector((state: RootState) => state.DATA_REDUCER);
+  console.log(products);
+
+  useEffect(() => {
+    dispatch(getProductsThunk());
+  }, []);
 
   return (
     <>

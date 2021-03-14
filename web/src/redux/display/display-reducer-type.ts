@@ -1,13 +1,16 @@
 export interface DisplayLoadingState {
-  placeholderLoading: boolean;
+  placeholderLoading?: boolean;
+  dashboardProductsLoading?: boolean;
 }
 
 export interface DisplayErrorState {
-  placeholderError: string | null;
+  placeholderError?: string | null;
+  dashboardProductsError?: string | null;
 }
 
 export interface DisplaySuccessState {
-  placeholderSuccess: boolean;
+  placeholderSuccess?: boolean;
+  dashboardProductsSuccess?: boolean;
 }
 
 export interface DisplayReduxState {

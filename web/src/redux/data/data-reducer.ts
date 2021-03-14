@@ -1,12 +1,18 @@
-import { DataAction, PlaceholderAction, PLACEHOLDER_A } from './data-actions';
+import {
+  DataAction,
+  PLACEHOLDER_A,
+  PlaceholderAction,
+  SET_DASHBOARD_PRODUCTS_A,
+  SetDashboardProductsAction
+} from './data-actions';
+import { Product } from '../../shared/domain';
 
-interface DataReduxState {
-  placeholder: null;
+export interface DataReduxState {
+  placeholder?: void;
+  dashboardProducts?: Product[] | null;
 }
 
-const defaultDataState = {
-  placeholder: null
-};
+const defaultDataState: DataReduxState = {};
 
 export const dataReducer = (
   state: DataReduxState = defaultDataState,
@@ -17,6 +23,12 @@ export const dataReducer = (
       return {
         ...state,
         placeholder: (action as PlaceholderAction).placeholder
+      };
+    case SET_DASHBOARD_PRODUCTS_A:
+      return {
+        ...state,
+        dashboardProducts: (action as SetDashboardProductsAction)
+          .dashboardProducts
       };
     default:
       return state;

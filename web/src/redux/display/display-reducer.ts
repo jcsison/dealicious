@@ -10,15 +10,9 @@ import {
 import { DisplayReduxState } from './display-reducer-type';
 
 const defaultDisplayState = {
-  displayLoading: {
-    placeholderLoading: false
-  },
-  displayError: {
-    placeholderError: null
-  },
-  displaySuccess: {
-    placeholderSuccess: false
-  }
+  displayLoading: {},
+  displayError: {},
+  displaySuccess: {}
 };
 
 export const displayReducer = (
@@ -34,8 +28,9 @@ export const displayReducer = (
     case SET_GENERIC_LOADING_A:
       const loadingResult = { ...state };
       const loadingAction = action as SetLoadingAction;
-      loadingResult.displayLoading[loadingAction.reduxField] =
-        loadingAction.loading;
+      loadingResult.displayLoading[
+        loadingAction.reduxField
+      ] = loadingAction.loading ? loadingAction.loading : false;
       if (loadingAction.errorFieldToNull) {
         loadingResult.displayError[loadingAction.errorFieldToNull] = null;
       }
@@ -43,8 +38,9 @@ export const displayReducer = (
     case SET_GENERIC_SUCCESS_A:
       const successResult = { ...state };
       const successAction = action as SetSuccessAction;
-      successResult.displaySuccess[successAction.reduxField] =
-        successAction.success;
+      successResult.displaySuccess[
+        successAction.reduxField
+      ] = successAction.success ? successAction.success : false;
       return successResult;
     default:
       return state;

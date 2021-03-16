@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { NavBar } from '../../shared/components/NavBar';
 import { ProductCard } from './components/ProductCard';
+import { FilterTags } from './components/FilterTags';
 import { RootState } from '../../redux/store';
 import { getProductsThunk } from '../../redux/thunk/thunks';
 
@@ -34,10 +35,10 @@ export const Dashboard = () => {
 
       <NavBar tabBar>
         <Box className={classes.filterBox} border={2.5} mb={2.5}>
-          <Box>
-            <Typography variant="overline">Sample</Typography>
+          <FilterTags />
+          <Box mt={1}>
+            <Button variant="contained">Add Filter</Button>
           </Box>
-          <Button>Add Filter</Button>
         </Box>
         <Paper elevation={3} variant="outlined">
           <Box

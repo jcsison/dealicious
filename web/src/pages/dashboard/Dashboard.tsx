@@ -13,15 +13,44 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavBar } from '../../shared/components/NavBar';
 import { ProductCard } from './components/ProductCard';
 import { FilterTags } from './components/FilterTags';
+import { AddFilterDialog } from './components/AddFilterDialog';
 import { RootState } from '../../redux/store';
 import { getProductsThunk } from '../../redux/thunk/thunks';
+
+export interface TagData {
+  label: string;
+}
 
 export const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
+  const [tagData, setTagData] = React.useState<TagData[]>([
+    { label: 'Filter Tag 1' },
+    { label: 'Filter Tag 2' },
+    { label: 'Filter Tag 3' }
+  ]);
+
   const products = useSelector((state: RootState) => state.DATA_REDUCER);
   console.log(products);
+
+  const handleClickOpenFilterDialog = () => {
+    setOpenFilterDialog(true);
+  };
+
+  const handleCloseFilterDialog = () => {
+    setOpenFilterDialog(false);
+  };
+
+  const handleFilterAdd = (tagToAdd: string) => {
+    setOpenFilterDialog(false);
+    setTagData(tagData.concat({ label: tagToAdd } as TagData));
+  };
+
+  const handleDelete = (tagToDelete: string) => {
+    setTagData(tagData.filter((tags) => tags.label !== tagToDelete));
+  };
 
   useEffect(() => {
     dispatch(getProductsThunk());
@@ -35,10 +64,17 @@ export const Dashboard = () => {
 
       <NavBar tabBar>
         <Box className={classes.filterBox} border={2.5} mb={2.5}>
-          <FilterTags />
+          <FilterTags tagDelete={handleDelete} tags={tagData} />
           <Box mt={1}>
-            <Button variant="contained">Add Filter</Button>
+            <Button variant="contained" onClick={handleClickOpenFilterDialog}>
+              Add Filter
+            </Button>
           </Box>
+          <AddFilterDialog
+            open={openFilterDialog}
+            close={handleCloseFilterDialog}
+            add={handleFilterAdd}
+          />
         </Box>
         <Paper elevation={3} variant="outlined">
           <Box

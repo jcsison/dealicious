@@ -17,8 +17,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Product } from '../../../shared/domain';
 
-export const ProductCard = () => {
+interface ProductData {
+  product: Product;
+}
+
+export const ProductCard = ({ product }: ProductData) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -36,17 +41,18 @@ export const ProductCard = () => {
                 <MoreVertIcon />
               </IconButton>
             }
-            title="Product Name"
+            title={product.name}
           />
-          {
-            <CardMedia
-              className={classes.media}
-              image="https://static01.nyt.com/images/2021/03/03/us/03xp-amazon-logo/oakImage-1614794068335-articleLarge.jpg"
-            />
-          }
+          <CardMedia
+            className={classes.media}
+            image="https://static01.nyt.com/images/2021/03/03/us/03xp-amazon-logo/oakImage-1614794068335-articleLarge.jpg"
+          />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              Example of card content.
+              {product.description}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Price: {product.price}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>

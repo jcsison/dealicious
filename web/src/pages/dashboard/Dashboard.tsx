@@ -16,6 +16,7 @@ import { FilterTags } from './components/FilterTags';
 import { AddFilterDialog } from './components/AddFilterDialog';
 import { RootState } from '../../redux/store';
 import { getProductsThunk } from '../../redux/thunk/thunks';
+import { dataReducer } from '../../redux/data/data-reducer';
 
 export interface TagData {
   label: string;
@@ -32,7 +33,9 @@ export const Dashboard = () => {
     { label: 'Filter Tag 3' }
   ]);
 
-  const products = useSelector((state: RootState) => state.DATA_REDUCER);
+  const products = useSelector(
+    (state: RootState) => state.DATA_REDUCER.dashboardProducts
+  );
   console.log(products);
 
   const handleClickOpenFilterDialog = () => {
@@ -85,9 +88,13 @@ export const Dashboard = () => {
             overflow="auto"
             maxHeight="70vh"
           >
-            <Box p={2}>
-              <ProductCard />
-            </Box>
+            {products?.map((data, index) => {
+              return (
+                <Box key={index + data.name} p={2}>
+                  <ProductCard product={data} />
+                </Box>
+              );
+            })}
           </Box>
         </Paper>
       </NavBar>

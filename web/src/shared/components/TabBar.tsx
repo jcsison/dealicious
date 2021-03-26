@@ -17,6 +17,7 @@ interface TabBarProps {
   open: boolean;
   handleOpen: () => void;
   handleClose: () => void;
+  handleTopicRemove: (topicNumber: number) => void;
   topics: string[];
 }
 
@@ -25,6 +26,7 @@ export const TabBar = ({
   open,
   handleOpen,
   handleClose,
+  handleTopicRemove,
   topics
 }: TabBarProps) => {
   const classes = useStyles();
@@ -35,25 +37,37 @@ export const TabBar = ({
     setCurrentTab(value);
   };
 
+  const removeTabAction = () => {
+    handleTopicRemove(currentTab);
+    setCurrentTab(0);
+  };
+
   return (
     <>
-      <Box className={classes.box} pr={5.5}>
+      <Box className={classes.box} pr={1}>
         <Tabs value={currentTab} onChange={handleChangeTab}>
           {topics?.map((data, index) => {
             return <Tab key={index + data} label={data} />;
           })}
         </Tabs>
-        <Box>
-          <Button variant="contained" onClick={handleOpen}>
-            New Topic
-          </Button>
-          <AddTopicDialog
-            open={open}
-            handleClose={handleClose}
-            addTopic={addTopic}
-          />
+        <Box className={classes.box}>
+          <Box>
+            <Button variant="contained" onClick={handleOpen}>
+              New Topic
+            </Button>
+          </Box>
+          <Box pl={2}>
+            <Button variant="contained" onClick={removeTabAction}>
+              Remove Topic
+            </Button>
+          </Box>
         </Box>
       </Box>
+      <AddTopicDialog
+        open={open}
+        handleClose={handleClose}
+        addTopic={addTopic}
+      />
     </>
   );
 };

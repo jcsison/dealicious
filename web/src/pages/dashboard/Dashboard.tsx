@@ -1,13 +1,6 @@
 import Head from 'next/head';
 import React, { useEffect } from 'react';
-import {
-  Box,
-  Button,
-  makeStyles,
-  Paper,
-  Theme,
-  Typography
-} from '@material-ui/core';
+import { Box, Button, makeStyles, Paper, Theme } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NavBar } from '../../shared/components/NavBar';
@@ -16,7 +9,6 @@ import { FilterTags } from './components/FilterTags';
 import { AddFilterDialog } from './components/AddFilterDialog';
 import { RootState } from '../../redux/store';
 import { getProductsThunk } from '../../redux/thunk/thunks';
-import { dataReducer } from '../../redux/data/data-reducer';
 
 export interface TagData {
   label: string;
@@ -27,10 +19,17 @@ export const Dashboard = () => {
   const dispatch = useDispatch();
 
   const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
+  const [openTopicDialog, setOpenTopicDialog] = React.useState(false);
   const [tagData, setTagData] = React.useState<TagData[]>([
     { label: 'Filter Tag 1' },
     { label: 'Filter Tag 2' },
     { label: 'Filter Tag 3' }
+  ]);
+
+  const [topics, setTopics] = React.useState<string[]>([
+    'Topic One',
+    'Topic Two',
+    'Topic Three'
   ]);
 
   const products = useSelector(
@@ -55,6 +54,19 @@ export const Dashboard = () => {
     setTagData(tagData.filter((tags) => tags.label !== tagToDelete));
   };
 
+  const handleTabAdd = (tabToAdd: string) => {
+    setOpenTopicDialog(false);
+    setTopics(topics.concat(tabToAdd as string));
+  };
+
+  const handleOpenTopicDialog = () => {
+    setOpenTopicDialog(true);
+  };
+
+  const handleCloseTopicDialog = () => {
+    setOpenTopicDialog(false);
+  };
+
   useEffect(() => {
     dispatch(getProductsThunk());
   }, []);
@@ -65,7 +77,14 @@ export const Dashboard = () => {
         <title>Dashboard | Dealicious</title>
       </Head>
 
-      <NavBar tabBar>
+      <NavBar
+        tabBar
+        addTopic={handleTabAdd}
+        open={openTopicDialog}
+        handleOpen={handleOpenTopicDialog}
+        handleClose={handleCloseTopicDialog}
+        topics={topics}
+      >
         <Box className={classes.filterBox} border={2.5} mb={2.5}>
           <FilterTags tagDelete={handleDelete} tags={tagData} />
           <Box mt={1}>
@@ -76,7 +95,7 @@ export const Dashboard = () => {
           <AddFilterDialog
             open={openFilterDialog}
             close={handleCloseFilterDialog}
-            add={handleFilterAdd}
+            addFilter={handleFilterAdd}
           />
         </Box>
         <Paper elevation={3} variant="outlined">

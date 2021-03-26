@@ -20,6 +20,7 @@ interface NavBarProps {
   open: boolean;
   handleOpen: () => void;
   handleClose: () => void;
+  handleTopicRemove: (topicNumber: number) => void;
   topics: string[];
 }
 
@@ -30,6 +31,7 @@ export const NavBar = ({
   open,
   handleOpen,
   handleClose,
+  handleTopicRemove,
   topics
 }: NavBarProps) => {
   const classes = useStyles();
@@ -55,6 +57,7 @@ export const NavBar = ({
             open={open}
             handleOpen={handleOpen}
             handleClose={handleClose}
+            handleTopicRemove={handleTopicRemove}
             topics={topics}
           />
         )}
@@ -67,5 +70,9 @@ export const NavBar = ({
 
 const useStyles = makeStyles((theme: Theme) => ({
   main: {},
-  toolbar: { display: 'flex', justifyContent: 'space-between' }
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingRight: 7
+  }
 }));

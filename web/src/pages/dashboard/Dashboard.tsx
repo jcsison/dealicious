@@ -46,8 +46,11 @@ export const Dashboard = () => {
   };
 
   const handleFilterAdd = (tagToAdd: string) => {
-    setOpenFilterDialog(false);
-    setTagData(tagData.concat({ label: tagToAdd } as TagData));
+    // Validating that the tag to add is not empty
+    if (tagToAdd.trim() != '') {
+      setOpenFilterDialog(false);
+      setTagData(tagData.concat({ label: tagToAdd } as TagData));
+    }
   };
 
   const handleDelete = (tagToDelete: string) => {
@@ -55,8 +58,11 @@ export const Dashboard = () => {
   };
 
   const handleTabAdd = (tabToAdd: string) => {
-    setOpenTopicDialog(false);
-    setTopics(topics.concat(tabToAdd as string));
+    // Validating that the tag to add is not empty
+    if (tabToAdd.trim() != '') {
+      setOpenTopicDialog(false);
+      setTopics(topics.concat(tabToAdd as string));
+    }
   };
 
   const handleOpenTopicDialog = () => {
@@ -65,6 +71,11 @@ export const Dashboard = () => {
 
   const handleCloseTopicDialog = () => {
     setOpenTopicDialog(false);
+  };
+
+  const handleTopicRemove = (topicNumber: number) => {
+    let topicNameToRemove = topics[topicNumber];
+    setTopics(topics.filter((topic) => topic !== topicNameToRemove));
   };
 
   useEffect(() => {
@@ -83,6 +94,7 @@ export const Dashboard = () => {
         open={openTopicDialog}
         handleOpen={handleOpenTopicDialog}
         handleClose={handleCloseTopicDialog}
+        handleTopicRemove={handleTopicRemove}
         topics={topics}
       >
         <Box className={classes.filterBox} border={2.5} mb={2.5}>
@@ -92,11 +104,6 @@ export const Dashboard = () => {
               Add Filter
             </Button>
           </Box>
-          <AddFilterDialog
-            open={openFilterDialog}
-            close={handleCloseFilterDialog}
-            addFilter={handleFilterAdd}
-          />
         </Box>
         <Paper elevation={3} variant="outlined">
           <Box
@@ -117,6 +124,11 @@ export const Dashboard = () => {
           </Box>
         </Paper>
       </NavBar>
+      <AddFilterDialog
+        open={openFilterDialog}
+        close={handleCloseFilterDialog}
+        addFilter={handleFilterAdd}
+      />
     </>
   );
 };

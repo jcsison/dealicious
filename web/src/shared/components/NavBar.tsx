@@ -16,9 +16,22 @@ import { TabBar } from './TabBar';
 interface NavBarProps {
   children: React.ReactNode;
   tabBar?: boolean;
+  addTopic: (topicToAdd: string) => void;
+  open: boolean;
+  handleOpen: () => void;
+  handleClose: () => void;
+  topics: string[];
 }
 
-export const NavBar = ({ children, tabBar }: NavBarProps) => {
+export const NavBar = ({
+  children,
+  tabBar,
+  addTopic,
+  open,
+  handleOpen,
+  handleClose,
+  topics
+}: NavBarProps) => {
   const classes = useStyles();
 
   return (
@@ -36,7 +49,15 @@ export const NavBar = ({ children, tabBar }: NavBarProps) => {
           <Button variant="contained">Go To Favorites</Button>
         </Toolbar>
 
-        {tabBar && <TabBar />}
+        {tabBar && (
+          <TabBar
+            addTopic={addTopic}
+            open={open}
+            handleOpen={handleOpen}
+            handleClose={handleClose}
+            topics={topics}
+          />
+        )}
       </AppBar>
 
       <Box p={4}>{children}</Box>

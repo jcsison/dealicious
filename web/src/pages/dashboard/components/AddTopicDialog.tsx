@@ -4,36 +4,36 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button, TextField } from '@material-ui/core';
 
-interface AddFilterDialogProps {
+interface AddTopicDialogProps {
   open: boolean;
-  close: () => void;
-  addFilter: (tagToAdd: string) => void;
+  handleClose: () => void;
+  addTopic: (topicToAdd: string) => void;
 }
 
-export const AddFilterDialog = ({
+export const AddTopicDialog = ({
   open,
-  close,
-  addFilter
-}: AddFilterDialogProps) => {
+  handleClose,
+  addTopic
+}: AddTopicDialogProps) => {
   const classes = useStyles();
-  let textBoxTag = '';
+  let textBoxTopic = '';
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    textBoxTag = event.target.value;
+    textBoxTopic = event.target.value;
   };
 
-  const handleAddFilterItem = (value: string) => {
-    addFilter(value);
+  const handleAddTopicItem = (value: string) => {
+    addTopic(value);
   };
 
   return (
     <>
-      <Dialog open={open} onClose={close}>
-        <DialogTitle>Add topic filter</DialogTitle>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add topic</DialogTitle>
         <TextField variant="outlined" onChange={handleTextFieldChange} />
-        <Button onClick={() => handleAddFilterItem(textBoxTag)}>Add</Button>
+        <Button onClick={() => handleAddTopicItem(textBoxTopic)}>Add</Button>
       </Dialog>
     </>
   );

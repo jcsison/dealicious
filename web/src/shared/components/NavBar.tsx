@@ -16,10 +16,12 @@ import { TabBar } from './TabBar';
 interface NavBarProps {
   children: React.ReactNode;
   tabBar?: boolean;
+  activeTab: number;
   addTopic: (topicToAdd: string) => void;
   open: boolean;
   handleOpen: () => void;
   handleClose: () => void;
+  handleTabChange: (tab: number) => void;
   handleTopicRemove: (topicNumber: number) => void;
   topics: string[];
 }
@@ -27,10 +29,12 @@ interface NavBarProps {
 export const NavBar = ({
   children,
   tabBar,
+  activeTab,
   addTopic,
   open,
   handleOpen,
   handleClose,
+  handleTabChange,
   handleTopicRemove,
   topics
 }: NavBarProps) => {
@@ -53,10 +57,12 @@ export const NavBar = ({
 
         {tabBar && (
           <TabBar
+            activeTab={activeTab}
             addTopic={addTopic}
             open={open}
             handleOpen={handleOpen}
             handleClose={handleClose}
+            handleTabChange={handleTabChange}
             handleTopicRemove={handleTopicRemove}
             topics={topics}
           />

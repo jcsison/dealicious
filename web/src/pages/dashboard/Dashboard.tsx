@@ -18,6 +18,7 @@ export const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [currentTab, setCurrentTab] = React.useState(0);
   const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
   const [openTopicDialog, setOpenTopicDialog] = React.useState(false);
   const [tagData, setTagData] = React.useState<TagData[]>([
@@ -65,6 +66,10 @@ export const Dashboard = () => {
     }
   };
 
+  const handleTabChange = (tab: number) => {
+    setCurrentTab(tab);
+  };
+
   const handleOpenTopicDialog = () => {
     setOpenTopicDialog(true);
   };
@@ -90,10 +95,12 @@ export const Dashboard = () => {
 
       <NavBar
         tabBar
+        activeTab={currentTab}
         addTopic={handleTabAdd}
         open={openTopicDialog}
         handleOpen={handleOpenTopicDialog}
         handleClose={handleCloseTopicDialog}
+        handleTabChange={handleTabChange}
         handleTopicRemove={handleTopicRemove}
         topics={topics}
       >

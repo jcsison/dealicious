@@ -13,39 +13,41 @@ import '../../pages/dashboard/components/AddTopicDialog';
 import { AddTopicDialog } from '../../pages/dashboard/components/AddTopicDialog';
 
 interface TabBarProps {
+  activeTab: number;
   addTopic: (topicToAdd: string) => void;
   open: boolean;
   handleOpen: () => void;
   handleClose: () => void;
+  handleTabChange: (tab: number) => void;
   handleTopicRemove: (topicNumber: number) => void;
   topics: string[];
 }
 
 export const TabBar = ({
+  activeTab,
   addTopic,
   open,
   handleOpen,
   handleClose,
+  handleTabChange,
   handleTopicRemove,
   topics
 }: TabBarProps) => {
   const classes = useStyles();
 
-  const [currentTab, setCurrentTab] = useState(0);
-
-  const handleChangeTab = (e, value) => {
-    setCurrentTab(value);
+  const onTabChange = (event, value: number) => {
+    handleTabChange(value);
   };
 
   const removeTabAction = () => {
-    handleTopicRemove(currentTab);
-    setCurrentTab(0);
+    handleTopicRemove(activeTab);
+    handleTabChange(0);
   };
 
   return (
     <>
       <Box className={classes.box} pr={1}>
-        <Tabs value={currentTab} onChange={handleChangeTab}>
+        <Tabs value={activeTab} onChange={onTabChange}>
           {topics?.map((data, index) => {
             return <Tab key={index + data} label={data} />;
           })}

@@ -19,6 +19,11 @@ export const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  //////////////////////////////////////////////////////////////////////////
+  //
+  // States
+  //
+  //////////////////////////////////////////////////////////////////////////
   const [currentTab, setCurrentTab] = React.useState(0);
   const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
   const [openTopicDialog, setOpenTopicDialog] = React.useState(false);
@@ -37,12 +42,20 @@ export const Dashboard = () => {
     'Topic Two',
     'Topic Three'
   ]);
+  const [currentTabFilterTags, setCurrentTabFilterTags] = React.useState<
+    FilterTagData[]
+  >(topicFilterTagData[topics[0]]);
 
   const products = useSelector(
     (state: RootState) => state.DATA_REDUCER.dashboardProducts
   );
   console.log(products);
 
+  //////////////////////////////////////////////////////////////////////////
+  //
+  // Filter Dialog state mutators
+  //
+  //////////////////////////////////////////////////////////////////////////
   const handleClickOpenFilterDialog = () => {
     setOpenFilterDialog(true);
   };
@@ -51,6 +64,11 @@ export const Dashboard = () => {
     setOpenFilterDialog(false);
   };
 
+  //////////////////////////////////////////////////////////////////////////
+  //
+  // Filter Tag state mutators
+  //
+  //////////////////////////////////////////////////////////////////////////
   const handleFilterTagAdd = (filterTagToAdd: string) => {
     // Validating that the tag to add is not empty
     if (filterTagToAdd.trim() != '') {
@@ -61,6 +79,12 @@ export const Dashboard = () => {
           label: filterTagToAdd
         } as FilterTagData)
       });
+
+      setCurrentTabFilterTags(
+        topicFilterTagData[topics[currentTab]].concat({
+          label: filterTagToAdd
+        } as FilterTagData)
+      );
     }
   };
 
@@ -71,8 +95,19 @@ export const Dashboard = () => {
         (tags) => tags.label !== filterTagToDelete
       )
     });
+
+    setCurrentTabFilterTags(
+      topicFilterTagData[topics[currentTab]].filter(
+        (tags) => tags.label !== filterTagToDelete
+      )
+    );
   };
 
+  //////////////////////////////////////////////////////////////////////////
+  //
+  // Tab state mutators
+  //
+  //////////////////////////////////////////////////////////////////////////
   const handleTabAdd = (tabToAdd: string) => {
     // Validating that the tag to add is not empty
     if (tabToAdd.trim() != '') {
@@ -82,9 +117,15 @@ export const Dashboard = () => {
   };
 
   const handleTabChange = (tab: number) => {
+    setCurrentTabFilterTags(topicFilterTagData[topics[tab]] ?? []);
     setCurrentTab(tab);
   };
 
+  //////////////////////////////////////////////////////////////////////////
+  //
+  // Topic state mutators
+  //
+  //////////////////////////////////////////////////////////////////////////
   const handleOpenTopicDialog = () => {
     setOpenTopicDialog(true);
   };
@@ -122,10 +163,11 @@ export const Dashboard = () => {
         <TabContext value={currentTab.toString()}>
           {topics.map((topic, index) => (
             <TabPanel key={topic + index} value={currentTab.toString()}>
+              {/*TODO: Change filter tag wrapper to Paper instead of Box.*/}
               <Box className={classes.filterBox} border={2.5} mb={2.5}>
                 <FilterTags
                   filterTagDelete={handleFilterTagDelete}
-                  filterTags={topicFilterTagData[topic] ?? []}
+                  filterTags={currentTabFilterTags}
                 />
                 <Box mt={1}>
                   <Button

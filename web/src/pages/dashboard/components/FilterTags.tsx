@@ -2,24 +2,27 @@ import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import { Box } from '@material-ui/core';
-import { TagData } from '../Dashboard';
+import { FilterTagData } from '../Dashboard';
 
 interface FilterTagsProps {
-  tagDelete: (tagToDelete: string) => void;
-  tags: TagData[];
+  filterTagDelete: (filterTagToDelete: string) => void;
+  filterTags: FilterTagData[];
 }
 
-export const FilterTags = ({ tagDelete, tags }: FilterTagsProps) => {
+export const FilterTags = ({
+  filterTagDelete,
+  filterTags
+}: FilterTagsProps) => {
   const classes = useStyles();
-
+  console.log(filterTags);
   return (
     <Box component="ul" className={classes.root}>
-      {tags.map((data, index) => {
+      {filterTags.map((data, index) => {
         return (
           <li key={data.label + index}>
             <Chip
               label={data.label}
-              onDelete={() => tagDelete(data.label)}
+              onDelete={() => filterTagDelete(data.label)}
               className={classes.chip}
             />
           </li>

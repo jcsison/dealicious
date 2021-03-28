@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavBar } from '../../shared/components/NavBar';
 import { ProductCard } from './components/ProductCard';
 import { FilterTags } from './components/FilterTags';
-import { AddFilterDialog } from './components/AddFilterDialog';
+import { AddFilterDialog } from './components/AddFilterTagDialog';
 import { RootState } from '../../redux/store';
 import { getProductsThunk } from '../../redux/thunk/thunks';
+import { TabContext, TabPanel } from '@material-ui/lab';
 
-export interface TagData {
+export interface FilterTagData {
   label: string;
 }
 
@@ -21,11 +22,15 @@ export const Dashboard = () => {
   const [currentTab, setCurrentTab] = React.useState(0);
   const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
   const [openTopicDialog, setOpenTopicDialog] = React.useState(false);
-  const [tagData, setTagData] = React.useState<TagData[]>([
-    { label: 'Filter Tag 1' },
-    { label: 'Filter Tag 2' },
-    { label: 'Filter Tag 3' }
-  ]);
+  const [topicFilterTagData, setTopicFilterTagData] = React.useState<{
+    [tab: string]: FilterTagData[];
+  }>({
+    'Topic One': [
+      { label: 'Filter Tag 1' },
+      { label: 'Filter Tag 2' },
+      { label: 'Filter Tag 3' }
+    ]
+  });
 
   const [topics, setTopics] = React.useState<string[]>([
     'Topic One',
@@ -46,16 +51,26 @@ export const Dashboard = () => {
     setOpenFilterDialog(false);
   };
 
-  const handleFilterAdd = (tagToAdd: string) => {
+  const handleFilterTagAdd = (filterTagToAdd: string) => {
     // Validating that the tag to add is not empty
-    if (tagToAdd.trim() != '') {
+    if (filterTagToAdd.trim() != '') {
       setOpenFilterDialog(false);
-      setTagData(tagData.concat({ label: tagToAdd } as TagData));
+      setTopicFilterTagData({
+        ...topicFilterTagData,
+        [topics[currentTab]]: topicFilterTagData[topics[currentTab]].concat({
+          label: filterTagToAdd
+        } as FilterTagData)
+      });
     }
   };
 
-  const handleDelete = (tagToDelete: string) => {
-    setTagData(tagData.filter((tags) => tags.label !== tagToDelete));
+  const handleFilterTagDelete = (filterTagToDelete: string) => {
+    setTopicFilterTagData({
+      ...topicFilterTagData,
+      [topics[currentTab]]: topicFilterTagData[topics[currentTab]].filter(
+        (tags) => tags.label !== filterTagToDelete
+      )
+    });
   };
 
   const handleTabAdd = (tabToAdd: string) => {
@@ -104,37 +119,49 @@ export const Dashboard = () => {
         handleTopicRemove={handleTopicRemove}
         topics={topics}
       >
-        <Box className={classes.filterBox} border={2.5} mb={2.5}>
-          <FilterTags tagDelete={handleDelete} tags={tagData} />
-          <Box mt={1}>
-            <Button variant="contained" onClick={handleClickOpenFilterDialog}>
-              Add Filter
-            </Button>
-          </Box>
-        </Box>
-        <Paper elevation={3} variant="outlined">
-          <Box
-            alignItems="center"
-            display="flex"
-            justifyContent="center"
-            flexWrap="wrap"
-            overflow="auto"
-            maxHeight="70vh"
-          >
-            {products?.map((data, index) => {
-              return (
-                <Box key={index + data.name} p={2}>
-                  <ProductCard product={data} />
+        <TabContext value={currentTab.toString()}>
+          {topics.map((topic, index) => (
+            <TabPanel key={topic + index} value={currentTab.toString()}>
+              <Box className={classes.filterBox} border={2.5} mb={2.5}>
+                <FilterTags
+                  filterTagDelete={handleFilterTagDelete}
+                  filterTags={topicFilterTagData[topic] ?? []}
+                />
+                <Box mt={1}>
+                  <Button
+                    variant="contained"
+                    onClick={handleClickOpenFilterDialog}
+                  >
+                    Add Filter
+                  </Button>
                 </Box>
-              );
-            })}
-          </Box>
-        </Paper>
+              </Box>
+              <Paper elevation={3} variant="outlined">
+                <Box
+                  alignItems="center"
+                  display="flex"
+                  justifyContent="center"
+                  flexWrap="wrap"
+                  overflow="auto"
+                  maxHeight="70vh"
+                >
+                  {products?.map((data, index) => {
+                    return (
+                      <Box key={index + data.name} p={2}>
+                        <ProductCard product={data} />
+                      </Box>
+                    );
+                  })}
+                </Box>
+              </Paper>
+            </TabPanel>
+          ))}
+        </TabContext>
       </NavBar>
       <AddFilterDialog
         open={openFilterDialog}
         close={handleCloseFilterDialog}
-        addFilter={handleFilterAdd}
+        addFilterTag={handleFilterTagAdd}
       />
     </>
   );

@@ -4,17 +4,17 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button, TextField } from '@material-ui/core';
 
-interface AddFilterDialogProps {
+interface AddFilterTagDialogProps {
   open: boolean;
   close: () => void;
-  addFilter: (tagToAdd: string) => void;
+  addFilterTag: (filterTagToAdd: string) => void;
 }
 
 export const AddFilterDialog = ({
   open,
   close,
-  addFilter
-}: AddFilterDialogProps) => {
+  addFilterTag
+}: AddFilterTagDialogProps) => {
   const classes = useStyles();
   let textBoxTag = '';
 
@@ -25,7 +25,7 @@ export const AddFilterDialog = ({
   };
 
   const handleAddFilterItem = (value: string) => {
-    addFilter(value);
+    addFilterTag(value);
   };
 
   return (

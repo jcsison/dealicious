@@ -48,7 +48,7 @@ export const TabBar = ({
     <>
       <Box className={classes.box} pr={1}>
         <Tabs value={activeTab} onChange={onTabChange}>
-          {topics?.map((data, index) => {
+          {topics.map((data, index) => {
             return <Tab key={index + data} label={data} />;
           })}
         </Tabs>

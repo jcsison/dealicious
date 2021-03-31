@@ -34,6 +34,16 @@ export const Dashboard = () => {
       { label: 'Filter Tag 1' },
       { label: 'Filter Tag 2' },
       { label: 'Filter Tag 3' }
+    ],
+    'Topic Two': [
+      { label: 'Filter Tag 1' },
+      { label: 'Filter Tag 2' },
+      { label: 'Filter Tag 3' }
+    ],
+    'Topic Three': [
+      { label: 'Filter Tag 1' },
+      { label: 'Filter Tag 2' },
+      { label: 'Filter Tag 3' }
     ]
   });
 
@@ -113,6 +123,10 @@ export const Dashboard = () => {
     if (tabToAdd.trim() != '') {
       setOpenTopicDialog(false);
       setTopics(topics.concat(tabToAdd as string));
+      setTopicFilterTagData({
+        ...topicFilterTagData,
+        [tabToAdd]: []
+      });
     }
   };
 
@@ -161,43 +175,44 @@ export const Dashboard = () => {
         topics={topics}
       >
         <TabContext value={currentTab.toString()}>
-          {topics.map((topic, index) => (
-            <TabPanel key={topic + index} value={currentTab.toString()}>
-              {/*TODO: Change filter tag wrapper to Paper instead of Box.*/}
-              <Box className={classes.filterBox} border={2.5} mb={2.5}>
-                <FilterTags
-                  filterTagDelete={handleFilterTagDelete}
-                  filterTags={currentTabFilterTags}
-                />
-                <Box mt={1}>
-                  <Button
-                    variant="contained"
-                    onClick={handleClickOpenFilterDialog}
-                  >
-                    Add Filter
-                  </Button>
-                </Box>
-              </Box>
-              <Paper elevation={3} variant="outlined">
-                <Box
-                  alignItems="center"
-                  display="flex"
-                  justifyContent="center"
-                  flexWrap="wrap"
-                  overflow="auto"
-                  maxHeight="70vh"
+          <TabPanel value={currentTab.toString()}>
+            <Paper
+              className={classes.filterBox}
+              elevation={3}
+              variant="outlined"
+            >
+              <FilterTags
+                filterTagDelete={handleFilterTagDelete}
+                filterTags={currentTabFilterTags}
+              />
+              <Box my={1}>
+                <Button
+                  variant="contained"
+                  onClick={handleClickOpenFilterDialog}
                 >
-                  {products?.map((data, index) => {
-                    return (
-                      <Box key={index + data.name} p={2}>
-                        <ProductCard product={data} />
-                      </Box>
-                    );
-                  })}
-                </Box>
-              </Paper>
-            </TabPanel>
-          ))}
+                  Add Filter
+                </Button>
+              </Box>
+            </Paper>
+            <Paper elevation={3} variant="outlined">
+              <Box
+                alignItems="center"
+                display="flex"
+                justifyContent="center"
+                flexWrap="wrap"
+                overflow="auto"
+                maxHeight="70vh"
+              >
+                {products?.map((data, index) => {
+                  return (
+                    <Box key={index + data.name} p={2}>
+                      <ProductCard product={data} />
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Paper>
+          </TabPanel>
         </TabContext>
       </NavBar>
       <AddFilterDialog
@@ -212,7 +227,8 @@ export const Dashboard = () => {
 const useStyles = makeStyles((theme: Theme) => ({
   filterBox: {
     display: 'flex',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    marginBottom: 10
   }
 }));
 

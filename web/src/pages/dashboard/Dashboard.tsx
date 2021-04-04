@@ -1,6 +1,13 @@
 import Head from 'next/head';
 import React, { useEffect } from 'react';
-import { Box, Button, makeStyles, Paper, Theme } from '@material-ui/core';
+import {
+  AppBar,
+  Box,
+  Button,
+  makeStyles,
+  Paper,
+  Theme
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NavBar } from '../../shared/components/NavBar';
@@ -10,6 +17,7 @@ import { AddFilterDialog } from './components/AddFilterTagDialog';
 import { RootState } from '../../redux/store';
 import { getProductsThunk } from '../../redux/thunk/thunks';
 import { TabContext, TabPanel } from '@material-ui/lab';
+import { TabBar } from '../../shared/components/TabBar';
 
 export interface FilterTagData {
   label: string;
@@ -163,17 +171,21 @@ export const Dashboard = () => {
         <title>Dashboard | Dealicious</title>
       </Head>
 
-      <NavBar
-        tabBar
-        activeTab={currentTab}
-        addTopic={handleTabAdd}
-        open={openTopicDialog}
-        handleOpen={handleOpenTopicDialog}
-        handleClose={handleCloseTopicDialog}
-        handleTabChange={handleTabChange}
-        handleTopicRemove={handleTopicRemove}
-        topics={topics}
-      >
+      <AppBar position="sticky">
+        <NavBar />
+        <TabBar
+          activeTab={currentTab}
+          addTopic={handleTabAdd}
+          open={openTopicDialog}
+          handleOpen={handleOpenTopicDialog}
+          handleClose={handleCloseTopicDialog}
+          handleTabChange={handleTabChange}
+          handleTopicRemove={handleTopicRemove}
+          topics={topics}
+        />
+      </AppBar>
+
+      <Box p={4}>
         <TabContext value={currentTab.toString()}>
           <TabPanel value={currentTab.toString()}>
             <Paper
@@ -214,7 +226,8 @@ export const Dashboard = () => {
             </Paper>
           </TabPanel>
         </TabContext>
-      </NavBar>
+      </Box>
+
       <AddFilterDialog
         open={openFilterDialog}
         close={handleCloseFilterDialog}

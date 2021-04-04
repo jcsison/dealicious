@@ -1,5 +1,3 @@
-export const Favorites = () => {
-  return null;
-};
+import { Favorites } from './Favorites';
 
 export default Favorites;

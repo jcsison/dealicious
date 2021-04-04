@@ -1,7 +1,7 @@
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
+import { useRouter } from 'next/router';
 import {
-  AppBar,
   Box,
   Button,
   IconButton,
@@ -11,65 +11,30 @@ import {
   Typography
 } from '@material-ui/core';
 
-import { TabBar } from './TabBar';
-
-interface NavBarProps {
-  children: React.ReactNode;
-  tabBar?: boolean;
-  activeTab: number;
-  addTopic: (topicToAdd: string) => void;
-  open: boolean;
-  handleOpen: () => void;
-  handleClose: () => void;
-  handleTabChange: (tab: number) => void;
-  handleTopicRemove: (topicNumber: number) => void;
-  topics: string[];
-}
-
-export const NavBar = ({
-  children,
-  tabBar,
-  activeTab,
-  addTopic,
-  open,
-  handleOpen,
-  handleClose,
-  handleTabChange,
-  handleTopicRemove,
-  topics
-}: NavBarProps) => {
+export const NavBar = () => {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <>
-      <AppBar position="sticky">
-        <Toolbar className={classes.toolbar}>
-          <Box display="flex" alignItems="center">
-            <IconButton edge="start">
-              <MenuIcon />
-            </IconButton>
+      <Toolbar className={classes.toolbar}>
+        <Box display="flex" alignItems="center">
+          <IconButton edge="start">
+            <MenuIcon />
+          </IconButton>
 
-            <Typography variant="h6">NavBar</Typography>
-          </Box>
-
-          <Button variant="contained">Go To Favorites</Button>
-        </Toolbar>
-
-        {tabBar && (
-          <TabBar
-            activeTab={activeTab}
-            addTopic={addTopic}
-            open={open}
-            handleOpen={handleOpen}
-            handleClose={handleClose}
-            handleTabChange={handleTabChange}
-            handleTopicRemove={handleTopicRemove}
-            topics={topics}
-          />
+          <Typography variant="h6">NavBar</Typography>
+        </Box>
+        {router.pathname === '/favorites' ? (
+          <Button onClick={() => router.push('/dashboard')} variant="contained">
+            Go To Dashboard
+          </Button>
+        ) : (
+          <Button onClick={() => router.push('/favorites')} variant="contained">
+            Go To Favorites
+          </Button>
         )}
-      </AppBar>
-
-      <Box p={4}>{children}</Box>
+      </Toolbar>
     </>
   );
 };

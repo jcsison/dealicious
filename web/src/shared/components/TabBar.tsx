@@ -1,14 +1,5 @@
-import React, { useState } from 'react';
-import {
-  AppBar,
-  Box,
-  Button,
-  makeStyles,
-  Tab,
-  Tabs,
-  Theme,
-  Typography
-} from '@material-ui/core';
+import React from 'react';
+import { Box, Button, makeStyles, Tab, Tabs, Theme } from '@material-ui/core';
 import '../../pages/dashboard/components/AddTopicDialog';
 import { AddTopicDialog } from '../../pages/dashboard/components/AddTopicDialog';
 

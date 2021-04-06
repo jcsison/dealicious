@@ -67,7 +67,6 @@ export const Dashboard = () => {
   const products = useSelector(
     (state: RootState) => state.DATA_REDUCER.dashboardProducts
   );
-  console.log(products);
 
   //////////////////////////////////////////////////////////////////////////
   //

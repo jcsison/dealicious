@@ -6,6 +6,8 @@ import {
   Button,
   IconButton,
   makeStyles,
+  Menu,
+  MenuItem,
   Theme,
   Toolbar,
   Typography
@@ -15,17 +17,48 @@ export const NavBar = () => {
   const classes = useStyles();
   const router = useRouter();
 
+  const [menuElement, setMenuElement] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setMenuElement(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setMenuElement(null);
+  };
+
   return (
     <>
       <Toolbar className={classes.toolbar}>
         <Box display="flex" alignItems="center">
-          <IconButton edge="start">
+          <IconButton onClick={handleMenuClick} edge="start">
             <MenuIcon />
           </IconButton>
-
-          <Typography variant="h6">NavBar</Typography>
+          <Menu
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorEl={menuElement}
+            open={Boolean(menuElement)}
+            onClose={handleClose}
+          >
+            <MenuItem>Profile</MenuItem>
+            <MenuItem onClick={() => router.push('/dashboard')}>
+              Dashboard
+            </MenuItem>
+            <MenuItem onClick={() => router.push('/favorites')}>
+              Favorites
+            </MenuItem>
+            <MenuItem>Settings</MenuItem>
+            <MenuItem>Logout</MenuItem>
+          </Menu>
+          {router.pathname === '/favorites' ? (
+            <Typography variant="h6">Favorites</Typography>
+          ) : (
+            <Typography variant="h6">Dashboard</Typography>
+          )}
         </Box>
-        {router.pathname === '/favorites' ? (
+        {/*router.pathname === '/favorites' ? (
           <Button onClick={() => router.push('/dashboard')} variant="contained">
             Go To Dashboard
           </Button>
@@ -33,7 +66,7 @@ export const NavBar = () => {
           <Button onClick={() => router.push('/favorites')} variant="contained">
             Go To Favorites
           </Button>
-        )}
+        )*/}
       </Toolbar>
     </>
   );

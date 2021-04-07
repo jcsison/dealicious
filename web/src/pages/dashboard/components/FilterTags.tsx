@@ -14,7 +14,7 @@ export const FilterTags = ({
   filterTags
 }: FilterTagsProps) => {
   const classes = useStyles();
-  console.log(filterTags);
+
   return (
     <Box component="ul" className={classes.root}>
       {filterTags.map((data, index) => {

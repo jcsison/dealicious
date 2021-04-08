@@ -32,3 +32,15 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# env
+.env
+
+# sqlite
+db.sqlite3
+
+# migrations
+**/migrations
+
+# pycache
+**/__pycache__

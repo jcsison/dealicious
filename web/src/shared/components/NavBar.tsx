@@ -49,14 +49,12 @@ export const NavBar = () => {
             <MenuItem onClick={() => router.push('/favorites')}>
               Favorites
             </MenuItem>
-            <MenuItem>Settings</MenuItem>
+            <MenuItem onClick={() => router.push('/settings')}>
+              Settings
+            </MenuItem>
             <MenuItem>Logout</MenuItem>
           </Menu>
-          {router.pathname === '/favorites' ? (
-            <Typography variant="h6">Favorites</Typography>
-          ) : (
-            <Typography variant="h6">Dashboard</Typography>
-          )}
+          <Typography variant="h6">NavBar</Typography>
         </Box>
         {/*router.pathname === '/favorites' ? (
           <Button onClick={() => router.push('/dashboard')} variant="contained">

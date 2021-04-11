@@ -12,18 +12,11 @@ import {
   Typography
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { useDispatch } from 'react-redux';
 
 import { NavBar } from '../../shared/components/NavBar';
-import { getProductsThunk } from '../../redux/thunk/thunks';
 
 export const Settings = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProductsThunk());
-  }, []);
 
   return (
     <>

@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Box,
   Button,
+  Divider,
   Link,
   makeStyles,
   Paper,
@@ -46,7 +47,7 @@ export const Login = () => {
                   size="small"
                 />
               </Box>
-              <hr />
+              <Divider />
               <Box display="flex" justifyContent="center" m={1.5}>
                 <Button size="large" variant="contained">
                   Login

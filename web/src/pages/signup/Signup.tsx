@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Box,
   Button,
+  Divider,
   FormControl,
   InputLabel,
   Link,
@@ -76,18 +77,18 @@ export const Signup = () => {
                     <InputLabel>Month</InputLabel>
                     <Select label="Month" native>
                       <option aria-label="None" value="" />
-                      <option value={10}>January</option>
-                      <option value={20}>February</option>
-                      <option value={30}>March</option>
-                      <option value={10}>April</option>
-                      <option value={20}>May</option>
-                      <option value={30}>June</option>
-                      <option value={10}>July</option>
-                      <option value={20}>Auguest</option>
-                      <option value={30}>September</option>
+                      <option value={1}>January</option>
+                      <option value={2}>February</option>
+                      <option value={3}>March</option>
+                      <option value={4}>April</option>
+                      <option value={5}>May</option>
+                      <option value={6}>June</option>
+                      <option value={7}>July</option>
+                      <option value={8}>Auguest</option>
+                      <option value={9}>September</option>
                       <option value={10}>October</option>
-                      <option value={20}>November</option>
-                      <option value={30}>December</option>
+                      <option value={11}>November</option>
+                      <option value={12}>December</option>
                     </Select>
                   </FormControl>
                 </Box>
@@ -110,7 +111,7 @@ export const Signup = () => {
               </Box>
             </Box>
             <Box pb={3} px={3} mb={1}>
-              <hr />
+              <Divider />
               <Box pt={1} display="flex" justifyContent="center">
                 <Button size="large" variant="contained">
                   Create New Account

@@ -26,45 +26,47 @@ export const Login = () => {
         </Typography>
       </Box>
 
-      <Box px={85} py={10}>
-        <Paper elevation={3} variant="outlined">
-          <Box p={3}>
-            <Box m={1}>
-              <TextField
-                label="Email"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
+      <Box display="flex" justifyContent="center">
+        <Box width={500} py={10}>
+          <Paper elevation={3} variant="outlined">
+            <Box p={3}>
+              <Box m={1}>
+                <TextField
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Box>
+              <Box pb={3} m={1}>
+                <TextField
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Box>
+              <hr />
+              <Box display="flex" justifyContent="center" m={1.5}>
+                <Button size="large" variant="contained">
+                  Login
+                </Button>
+              </Box>
+              <Box display="flex" justifyContent="center">
+                <Link variant="subtitle2" href="#">
+                  Forgot password?
+                </Link>
+              </Box>
             </Box>
-            <Box m={1}>
-              <TextField
-                label="Password"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Box>
-            <Box display="flex" justifyContent="center" m={1}>
-              <Button size="large" variant="contained">
-                Login
-              </Button>
-            </Box>
-            <Box display="flex" justifyContent="center">
-              <Link variant="subtitle2" href="#">
-                Forgot password?
+          </Paper>
+          <Box mt={1}>
+            <Box pt={1} display="flex" justifyContent="center">
+              <Link href="/signup" variant="subtitle2">
+                Create New Account
               </Link>
             </Box>
           </Box>
-          <Box pb={3} px={3} mb={1}>
-            <hr />
-            <Box pt={1} display="flex" justifyContent="center">
-              <Button size="large" variant="contained">
-                Create New Account
-              </Button>
-            </Box>
-          </Box>
-        </Paper>
+        </Box>
       </Box>
     </>
   );

@@ -9,6 +9,7 @@ setup(
         "black",
         "django",
         "djangorestframework",
+        "graphene-django",
         "pylint-django",
         "wheel",
     ],

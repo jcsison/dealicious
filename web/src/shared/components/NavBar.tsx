@@ -52,7 +52,7 @@ export const NavBar = () => {
             <MenuItem onClick={() => router.push('/settings')}>
               Settings
             </MenuItem>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem onClick={() => router.push('/login')}>Logout</MenuItem>
           </Menu>
           <Typography variant="h6">NavBar</Typography>
         </Box>

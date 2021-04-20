@@ -20,7 +20,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Product } from '../../../shared/domain';
 
 interface ProductData {
-  product: Product;
+  product?: Product;
 }
 
 export const ProductCard = ({ product }: ProductData) => {
@@ -41,7 +41,7 @@ export const ProductCard = ({ product }: ProductData) => {
                 <MoreVertIcon />
               </IconButton>
             }
-            title={product.name}
+            title={product?.name}
           />
           <CardMedia
             className={classes.media}
@@ -49,10 +49,10 @@ export const ProductCard = ({ product }: ProductData) => {
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              {product.description}
+              {product?.description}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Price: {product.price}
+              Price: {product?.price}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
@@ -102,3 +102,5 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)'
   }
 }));
+
+export default ProductCard;

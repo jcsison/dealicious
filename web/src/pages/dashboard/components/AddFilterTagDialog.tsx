@@ -40,3 +40,5 @@ export const AddFilterDialog = ({
 };
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
+
+export default AddFilterDialog;

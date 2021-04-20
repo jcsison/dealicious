@@ -40,3 +40,5 @@ export const AddTopicDialog = ({
 };
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
+
+export default AddTopicDialog;

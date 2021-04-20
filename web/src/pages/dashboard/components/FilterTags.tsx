@@ -6,7 +6,7 @@ import { FilterTagData } from '../Dashboard';
 
 interface FilterTagsProps {
   filterTagDelete: (filterTagToDelete: string) => void;
-  filterTags: FilterTagData[];
+  filterTags?: FilterTagData[];
 }
 
 export const FilterTags = ({
@@ -17,7 +17,7 @@ export const FilterTags = ({
 
   return (
     <Box component="ul" className={classes.root}>
-      {filterTags.map((data, index) => {
+      {filterTags?.map((data, index) => {
         return (
           <li key={data.label + index}>
             <Chip
@@ -48,3 +48,5 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
+
+export default FilterTags;

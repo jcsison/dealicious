@@ -50,7 +50,12 @@ export const ProductCard = ({ product }: ProductData) => {
             <CardMedia
               className={classes.media}
               image="https://static01.nyt.com/images/2021/03/03/us/03xp-amazon-logo/oakImage-1614794068335-articleLarge.jpg"
-              onClick={() => router.push('./product')}
+              onClick={() =>
+                router.push({
+                  pathname: './product/[productId]',
+                  query: { productId: product.id }
+                })
+              }
             />
           </CardActionArea>
           <CardContent>

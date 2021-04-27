@@ -27,4 +27,18 @@ export const setDashboardProductsAction = (
   };
 };
 
-export type DataAction = PlaceholderAction | SetDashboardProductsAction;
+export const SET_PRODUCT_A = 'SET_PRODUCT_A';
+export interface SetProductAction extends Action<typeof SET_PRODUCT_A> {
+  product: Product | null;
+}
+export const setProductAction = (product: Product | null) => {
+  return {
+    type: SET_PRODUCT_A,
+    product: product
+  };
+};
+
+export type DataAction =
+  | PlaceholderAction
+  | SetDashboardProductsAction
+  | SetProductAction;

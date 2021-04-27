@@ -18,9 +18,21 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ShareIcon from '@material-ui/icons/Share';
 
 import { NavBar } from '../../shared/components/NavBar';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_PRODUCT_A } from '../../redux/data/data-actions';
+import { getProductThunk } from '../../redux/thunk/thunks';
+import { RootState } from '../../redux/store';
 
 export const Product = () => {
   const classes = useStyles();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { productId } = router.query;
+  React.useEffect(() => {
+    dispatch(getProductThunk(productId?.toString()));
+  }, []);
+  const product = useSelector((state: RootState) => state.DATA_REDUCER.product);
 
   return (
     <>
@@ -48,17 +60,17 @@ export const Product = () => {
         >
           <Box>
             <Box p={3}>
-              <Typography variant="h6">Name Placeholder</Typography>
+              <Typography variant="h6">{product?.name}</Typography>
             </Box>
             <Divider variant="middle" />
             <Box p={3}>
-              <Typography variant="h6">Price: Price Placeholder</Typography>
+              <Typography variant="h6">Price: {product?.price}</Typography>
             </Box>
             <Divider variant="middle" />
             <Box p={3} mb={2}>
               <Typography variant="h6">About this item</Typography>
               <Typography variant="subtitle2">
-                Description Placeholder
+                {product?.description}
               </Typography>
             </Box>
             <Divider variant="middle" />

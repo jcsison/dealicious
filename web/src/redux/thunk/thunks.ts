@@ -32,7 +32,7 @@ export const getProductsThunk = () => async (
     errorState: 'dashboardProductsError',
     successState: 'dashboardProductsSuccess',
     tryBlock: async () => {
-      const products: Product[] = await getHttp('/api/dummy/products');
+      const products: Product[] = await getHttp('/api/dummy/product');
 
       if (products) {
         dispatch(setDashboardProductsAction(products));
@@ -51,10 +51,10 @@ export const getProductThunk = (productId: string) => async (
     errorState: 'productError',
     successState: 'productSuccess',
     tryBlock: async () => {
-      const products: Product[] = await getHttp('/api/dummy/products');
+      const product: Product = await getHttp(`/api/dummy/product/${productId}`);
 
-      if (products) {
-        dispatch(setProductAction(products[Number(productId) - 1]));
+      if (product) {
+        dispatch(setProductAction(product));
       }
     }
   });

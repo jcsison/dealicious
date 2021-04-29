@@ -48,7 +48,7 @@ export const thunkCallStruct: (props: ThunkCallStructProps) => void = async ({
       dispatch(setLoadingAction(loadingState, false, errorState));
     }
 
-    if (errorState) {
+    if (errorState && e.errors?.length > 0 && e.errors[0].message) {
       if (!noAlert) {
         // TODO: call snackbar alert
       }

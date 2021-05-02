@@ -2,11 +2,10 @@ import Head from 'next/head';
 import React from 'react';
 import {
   AppBar,
-  Avatar,
   Box,
-  Button,
   Card,
   CardMedia,
+  CircularProgress,
   Divider,
   IconButton,
   makeStyles,
@@ -33,6 +32,9 @@ export const Product = () => {
     dispatch(getProductThunk(productId?.toString()));
   }, []);
   const product = useSelector((state: RootState) => state.DATA_REDUCER.product);
+  const loading = useSelector(
+    (state: RootState) => state.DISPLAY_REDUCER.displayLoading.productLoading
+  );
 
   return (
     <>
@@ -44,47 +46,53 @@ export const Product = () => {
         <NavBar />
       </AppBar>
 
-      <Box display="flex" justifyContent="center" py={5} px={10}>
-        <Box pr={2}>
-          <Card>
-            <CardMedia
-              className={classes.profilePicture}
-              image="https://www.retailgazette.co.uk/wp-content/uploads/Amazon_online-retail_ecommerce_delivery-box_ST-4.jpg"
-            />
-          </Card>
+      {loading ? (
+        <Box display="flex" justifyContent="center" m={45}>
+          <CircularProgress />
         </Box>
-        <Paper
-          elevation={3}
-          variant="outlined"
-          className={classes.settingsContainer}
-        >
-          <Box>
-            <Box p={3}>
-              <Typography variant="h6">{product?.name}</Typography>
-            </Box>
-            <Divider variant="middle" />
-            <Box p={3}>
-              <Typography variant="h6">Price: {product?.price}</Typography>
-            </Box>
-            <Divider variant="middle" />
-            <Box p={3} mb={2}>
-              <Typography variant="h6">About this item</Typography>
-              <Typography variant="subtitle2">
-                {product?.description}
-              </Typography>
-            </Box>
-            <Divider variant="middle" />
-            <Box p={3} display="flex" justifyContent="center">
-              <IconButton>
-                <FavoriteBorderIcon />
-              </IconButton>
-              <IconButton>
-                <ShareIcon />
-              </IconButton>
-            </Box>
+      ) : (
+        <Box display="flex" justifyContent="center" py={5} px={10}>
+          <Box pr={2}>
+            <Card>
+              <CardMedia
+                className={classes.profilePicture}
+                image="https://www.retailgazette.co.uk/wp-content/uploads/Amazon_online-retail_ecommerce_delivery-box_ST-4.jpg"
+              />
+            </Card>
           </Box>
-        </Paper>
-      </Box>
+          <Paper
+            elevation={3}
+            variant="outlined"
+            className={classes.settingsContainer}
+          >
+            <Box>
+              <Box p={3}>
+                <Typography variant="h6">{product?.name}</Typography>
+              </Box>
+              <Divider variant="middle" />
+              <Box p={3}>
+                <Typography variant="h6">Price: {product?.price}</Typography>
+              </Box>
+              <Divider variant="middle" />
+              <Box p={3} mb={2}>
+                <Typography variant="h6">About this item</Typography>
+                <Typography variant="subtitle2">
+                  {product?.description}
+                </Typography>
+              </Box>
+              <Divider variant="middle" />
+              <Box p={3} display="flex" justifyContent="center">
+                <IconButton>
+                  <FavoriteBorderIcon />
+                </IconButton>
+                <IconButton>
+                  <ShareIcon />
+                </IconButton>
+              </Box>
+            </Box>
+          </Paper>
+        </Box>
+      )}
     </>
   );
 };

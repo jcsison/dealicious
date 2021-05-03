@@ -42,3 +42,41 @@ export const getHttp = async (url_path: string) => {
   }
   return await result.json();
 };
+
+export const deleteHttp = async (url_path: string) => {
+  const fullUrl = `${_getHost()}${url_path}`;
+  const result = await fetch(fullUrl, {
+    method: 'DELETE',
+    headers: _getHeaders()
+  });
+  if (!result.ok) {
+    throw new HttpError(result.statusText, result.status);
+  }
+  return await result;
+};
+
+export const postHttp = async (url_path: string, body: object) => {
+  const fullUrl = `${_getHost()}${url_path}`;
+  const result = await fetch(fullUrl, {
+    method: 'POST',
+    headers: _getHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(body)
+  });
+  if (!result.ok) {
+    throw new HttpError(result.statusText, result.status);
+  }
+  return await result.json();
+};
+
+export const putHttp = async (url_path: string, body: object) => {
+  const fullUrl = `${_getHost()}${url_path}`;
+  const result = await fetch(fullUrl, {
+    method: 'PUT',
+    headers: _getHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(body)
+  });
+  if (!result.ok) {
+    throw new HttpError(result.statusText, result.status);
+  }
+  return await result.json();
+};

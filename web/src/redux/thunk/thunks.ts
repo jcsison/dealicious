@@ -2,6 +2,7 @@ import { Product, User, UserLogin, UserSignup } from '../../shared/domain';
 import { RootState, ThunkDispatch } from '../store';
 import { getHttp, postHttp } from './api-utils';
 import {
+  setCurrentUserAction,
   setDashboardProductsAction,
   setProductAction
 } from '../data/data-actions';
@@ -76,6 +77,28 @@ export const getProductThunk = (productId: string) => async (
 
       if (product) {
         dispatch(setProductAction(product));
+      }
+    }
+  });
+};
+
+export const getUserThunk = (email: string, password: string) => async (
+  dispatch: ThunkDispatch,
+  getState: () => RootState
+) => {
+  thunkCallStruct({
+    dispatch,
+    loadingState: 'userLoading',
+    errorState: 'userError',
+    successState: 'userSuccess',
+    tryBlock: async () => {
+      const user: User = await postHttp('/api/dummy/user/login', {
+        email: email,
+        password: password
+      } as UserLogin);
+
+      if (user) {
+        dispatch(setCurrentUserAction(user));
       }
     }
   });

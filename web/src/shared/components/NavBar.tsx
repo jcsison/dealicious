@@ -12,9 +12,13 @@ import {
   Toolbar,
   Typography
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { setCurrentUserAction } from '../../redux/data/data-actions';
+import { setSuccessAction } from '../../redux/display/display-actions';
 
 export const NavBar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const [menuElement, setMenuElement] = React.useState<null | HTMLElement>(
@@ -27,6 +31,12 @@ export const NavBar = () => {
 
   const handleClose = () => {
     setMenuElement(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(setCurrentUserAction(null));
+    dispatch(setSuccessAction('userSuccess', false));
+    router.push('/login');
   };
 
   return (
@@ -52,7 +62,7 @@ export const NavBar = () => {
             <MenuItem onClick={() => router.push('/settings')}>
               Settings
             </MenuItem>
-            <MenuItem onClick={() => router.push('/login')}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
           <Typography variant="h6">NavBar</Typography>
         </Box>

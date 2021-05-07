@@ -13,6 +13,10 @@ import {
 } from '@material-ui/core';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import { getProductThunk, getUserThunk } from '../../redux/thunk/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useRouter } from 'next/router';
 
 const validationSchema = yup.object({
   email: yup
@@ -24,6 +28,11 @@ const validationSchema = yup.object({
 
 export const Login = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const userLoginSuccess = useSelector(
+    (state: RootState) => state.DISPLAY_REDUCER.displaySuccess.userSuccess
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -32,9 +41,19 @@ export const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      handleLogin();
     }
   });
+
+  const handleLogin = () => {
+    dispatch(getUserThunk(formik.values.email, formik.values.password));
+  };
+
+  React.useEffect(() => {
+    if (userLoginSuccess) {
+      router.push('/dashboard');
+    }
+  }, [userLoginSuccess]);
 
   return (
     <>
@@ -86,7 +105,12 @@ export const Login = () => {
                 </Box>
                 <Divider />
                 <Box display="flex" justifyContent="center" m={1.5}>
-                  <Button size="large" variant="contained" type="submit">
+                  <Button
+                    onClick={handleLogin}
+                    size="large"
+                    variant="contained"
+                    type="submit"
+                  >
                     Login
                   </Button>
                 </Box>

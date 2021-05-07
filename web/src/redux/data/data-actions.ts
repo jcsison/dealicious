@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-import { Product } from '../../shared/domain';
+import { Product, User } from '../../shared/domain';
 
 export const PLACEHOLDER_A = 'PLACEHOLDER_A';
 export interface PlaceholderAction extends Action<typeof PLACEHOLDER_A> {
@@ -38,7 +38,20 @@ export const setProductAction = (product: Product | null) => {
   };
 };
 
+export const SET_CURRENT_USER_A = 'SET_CURRENT_USER_A';
+export interface SetCurrentUserAction
+  extends Action<typeof SET_CURRENT_USER_A> {
+  user: User | null;
+}
+export const setCurrentUserAction = (user: User | null) => {
+  return {
+    type: SET_CURRENT_USER_A,
+    user: user
+  };
+};
+
 export type DataAction =
   | PlaceholderAction
   | SetDashboardProductsAction
-  | SetProductAction;
+  | SetProductAction
+  | SetCurrentUserAction;

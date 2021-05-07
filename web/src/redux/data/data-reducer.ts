@@ -5,14 +5,17 @@ import {
   SET_DASHBOARD_PRODUCTS_A,
   SetDashboardProductsAction,
   SetProductAction,
-  SET_PRODUCT_A
+  SET_PRODUCT_A,
+  SET_CURRENT_USER_A,
+  SetCurrentUserAction
 } from './data-actions';
-import { Product } from '../../shared/domain';
+import { Product, User } from '../../shared/domain';
 
 export interface DataReduxState {
   placeholder?: void;
   dashboardProducts?: Product[] | null;
   product?: Product | null;
+  currentUser?: User | null;
 }
 
 const defaultDataState: DataReduxState = {};
@@ -37,6 +40,11 @@ export const dataReducer = (
       return {
         ...state,
         product: (action as SetProductAction).product
+      };
+    case SET_CURRENT_USER_A:
+      return {
+        ...state,
+        currentUser: (action as SetCurrentUserAction).user
       };
     default:
       return state;

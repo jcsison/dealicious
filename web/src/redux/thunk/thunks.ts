@@ -35,27 +35,6 @@ export const getProductsThunk = () => async (
     tryBlock: async () => {
       const products: Product[] = await getHttp('/api/dummy/product');
 
-      /*
-      const user: User = await postHttp('/api/dummy/user/login', {
-        email: 'test@test.com',
-        password: ''
-      } as UserLogin);
-      const newUser: User = await postHttp('/api/dummy/user/signup', {
-        first_name: 'Test2',
-        last_name: 'User',
-        email: 'test2@test.com',
-        password: '',
-        date_of_birth: new Date(1990, 1, 1)
-      } as UserSignup);
-      const user2: User = await postHttp('/api/dummy/user/login', {
-        email: 'test2@test.com',
-        password: ''
-      } as UserLogin);
-      console.log(user);
-      console.log(newUser);
-      console.log(user2);
-      */
-
       if (products) {
         dispatch(setDashboardProductsAction(products));
       }
@@ -103,3 +82,30 @@ export const getUserThunk = (email: string, password: string) => async (
     }
   });
 };
+
+export const getNewUserThunk = (
+  firstName: string,
+  lastName: string,
+  email: string,
+  dateOfBirth: Date,
+  password: string
+) => async (dispatch: ThunkDispatch, getState: () => RootState) => {
+  thunkCallStruct({
+    dispatch,
+    loadingState: 'newUserLoading',
+    errorState: 'newUserError',
+    successState: 'newUserSuccess',
+    tryBlock: async () => {
+      const newUser: User = await postHttp('/api/dummy/user/signup', {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password,
+        date_of_birth: dateOfBirth
+      } as UserSignup);
+    }
+  });
+};
+
+// TODO: Create getFavoritesThunk which passes in user ID in order to get array of products from store
+// TODO: Add in template functions for add/remove favorites thunk

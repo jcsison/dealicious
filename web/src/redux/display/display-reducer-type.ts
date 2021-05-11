@@ -3,6 +3,7 @@ export interface DisplayLoadingState {
   dashboardProductsLoading?: boolean;
   productLoading?: boolean;
   userLoading?: boolean;
+  newUserLoading?: boolean;
 }
 
 export interface DisplayErrorState {
@@ -10,6 +11,7 @@ export interface DisplayErrorState {
   dashboardProductsError?: string | null;
   productError?: string | null;
   userError?: string | null;
+  newUserError?: string | null;
 }
 
 export interface DisplaySuccessState {
@@ -17,6 +19,7 @@ export interface DisplaySuccessState {
   dashboardProductsSuccess?: boolean;
   productSuccess?: boolean;
   userSuccess?: boolean;
+  newUserSuccess?: boolean;
 }
 
 export interface DisplayReduxState {

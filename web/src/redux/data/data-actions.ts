@@ -55,3 +55,5 @@ export type DataAction =
   | SetDashboardProductsAction
   | SetProductAction
   | SetCurrentUserAction;
+
+// TODO: Create data actions for SET_FAVORITES_A

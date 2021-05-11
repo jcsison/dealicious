@@ -16,6 +16,10 @@ import {
 } from '@material-ui/core';
 import * as yup from 'yup';
 import { Field, FormikProvider, useFormik } from 'formik';
+import { getNewUserThunk } from '../../redux/thunk/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import router from 'next/router';
 
 const validationSchema = yup.object({
   firstName: yup
@@ -54,6 +58,10 @@ const validationSchema = yup.object({
 
 export const Signup = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const newUserCreationSuccess = useSelector(
+    (state: RootState) => state.DISPLAY_REDUCER.displaySuccess.newUserSuccess
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -61,15 +69,36 @@ export const Signup = () => {
       lastName: '',
       email: '',
       password: '',
-      month: '',
-      day: '',
-      year: ''
+      month: null,
+      day: null,
+      year: null
     },
     validationSchema: validationSchema,
+    validateOnMount: true,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      handleNewUser();
     }
   });
+
+  const handleNewUser = () => {
+    if (formik.isValid) {
+      dispatch(
+        getNewUserThunk(
+          formik.values.firstName,
+          formik.values.lastName,
+          formik.values.email,
+          new Date(formik.values.year, formik.values.month, formik.values.day),
+          formik.values.password
+        )
+      );
+    }
+  };
+
+  React.useEffect(() => {
+    if (newUserCreationSuccess) {
+      router.push('/login');
+    }
+  }, [newUserCreationSuccess]);
 
   return (
     <>
@@ -177,18 +206,18 @@ export const Signup = () => {
                           native
                         >
                           <option aria-label="None" value="" />
-                          <option value={1}>January</option>
-                          <option value={2}>February</option>
-                          <option value={3}>March</option>
-                          <option value={4}>April</option>
-                          <option value={5}>May</option>
-                          <option value={6}>June</option>
-                          <option value={7}>July</option>
-                          <option value={8}>August</option>
-                          <option value={9}>September</option>
-                          <option value={10}>October</option>
-                          <option value={11}>November</option>
-                          <option value={12}>December</option>
+                          <option value={0}>January</option>
+                          <option value={1}>February</option>
+                          <option value={2}>March</option>
+                          <option value={3}>April</option>
+                          <option value={4}>May</option>
+                          <option value={5}>June</option>
+                          <option value={6}>July</option>
+                          <option value={7}>August</option>
+                          <option value={8}>September</option>
+                          <option value={9}>October</option>
+                          <option value={10}>November</option>
+                          <option value={11}>December</option>
                         </Field>
                       </FormikProvider>
                     </FormControl>

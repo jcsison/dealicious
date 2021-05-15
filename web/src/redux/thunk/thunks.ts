@@ -4,7 +4,8 @@ import { getHttp, postHttp } from './api-utils';
 import {
   setCurrentUserAction,
   setDashboardProductsAction,
-  setProductAction
+  setProductAction,
+  setUserFavoritesAction
 } from '../data/data-actions';
 import { thunkCallStruct } from './thunk-utils';
 
@@ -107,7 +108,6 @@ export const getNewUserThunk = (
   });
 };
 
-// TODO: Create getFavoritesThunk which passes in user ID in order to get array of products from store
 export const getFavoritesThunk = (userId: number) => async (
   dispatch: ThunkDispatch,
   getState: () => RootState

@@ -4,6 +4,7 @@ export interface DisplayLoadingState {
   productLoading?: boolean;
   userLoading?: boolean;
   newUserLoading?: boolean;
+  userFavoritesLoading?: boolean;
 }
 
 export interface DisplayErrorState {
@@ -12,6 +13,7 @@ export interface DisplayErrorState {
   productError?: string | null;
   userError?: string | null;
   newUserError?: string | null;
+  userFavoritesError?: string | null;
 }
 
 export interface DisplaySuccessState {
@@ -20,6 +22,7 @@ export interface DisplaySuccessState {
   productSuccess?: boolean;
   userSuccess?: boolean;
   newUserSuccess?: boolean;
+  userFavoritesSuccess?: boolean;
 }
 
 export interface DisplayReduxState {

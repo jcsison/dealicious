@@ -108,4 +108,23 @@ export const getNewUserThunk = (
 };
 
 // TODO: Create getFavoritesThunk which passes in user ID in order to get array of products from store
+export const getFavoritesThunk = (userId: number) => async (
+  dispatch: ThunkDispatch,
+  getState: () => RootState
+) => {
+  thunkCallStruct({
+    dispatch,
+    loadingState: 'userFavoritesLoading',
+    errorState: 'userFavoritesError',
+    successState: 'userFavoritesSuccess',
+    tryBlock: async () => {
+      // TODO: Create the API for the favorites. Folder name: favorites. Each .ts will be a function (add, remove, get).
+      const products: Product[] = await getHttp('/api/dummy/favorites');
+
+      if (products) {
+        dispatch(setUserFavoritesAction(products));
+      }
+    }
+  });
+};
 // TODO: Add in template functions for add/remove favorites thunk

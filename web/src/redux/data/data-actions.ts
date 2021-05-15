@@ -50,10 +50,21 @@ export const setCurrentUserAction = (user: User | null) => {
   };
 };
 
+export const SET_USER_FAVORITES_A = 'SET_USER_FAVORITES_A';
+export interface SetUserFavoritesAction
+  extends Action<typeof SET_USER_FAVORITES_A> {
+  userFavorites: Product[] | null;
+}
+export const setUserFavoritesAction = (userFavorites: Product[] | null) => {
+  return {
+    type: SET_USER_FAVORITES_A,
+    userFavorites: userFavorites
+  };
+};
+
 export type DataAction =
   | PlaceholderAction
   | SetDashboardProductsAction
   | SetProductAction
-  | SetCurrentUserAction;
-
-// TODO: Create data actions for SET_FAVORITES_A
+  | SetCurrentUserAction
+  | SetUserFavoritesAction;

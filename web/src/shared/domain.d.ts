@@ -29,3 +29,10 @@ export interface Product extends DBModel {
   price: number;
   image_url?: string;
 }
+
+export interface Favorite extends DBModel {
+  productId: UUID;
+  userId: UUID;
+}
+
+export interface FavoritedProduct extends Product, Favorite {}

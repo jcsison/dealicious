@@ -1,3 +1,4 @@
+import * as yup from 'yup';
 import Head from 'next/head';
 import React from 'react';
 import {
@@ -11,12 +12,12 @@ import {
   Theme,
   Typography
 } from '@material-ui/core';
-import * as yup from 'yup';
-import { useFormik } from 'formik';
-import { getProductThunk, getUserThunk } from '../../redux/thunk/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
+
+import { RootState } from '../../redux/store';
+import { getUserThunk } from '../../redux/thunk/thunks';
 
 const validationSchema = yup.object({
   email: yup

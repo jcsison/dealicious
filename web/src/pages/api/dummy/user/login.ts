@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import db from '../db';
 import { User } from '../../../../shared/domain';
-import { users } from './signup';
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  const loggedInUser = users.find(
+  const loggedInUser = db.users.find(
     (user: User) => user.email === req.body.email
   );
 

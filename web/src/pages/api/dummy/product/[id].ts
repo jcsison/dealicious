@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Product } from '../../../../shared/domain';
-import { products } from './index';
+import { getDbItemById } from '../utils';
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  const product = products.find((p: Product) => p.id === req.query.id);
+  const product: Product = getDbItemById('products', req.query.id as string);
 
   if (product) {
     res.status(200).json(product);

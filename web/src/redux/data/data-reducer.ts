@@ -11,14 +11,14 @@ import {
   SET_USER_FAVORITES_A,
   SetUserFavoritesAction
 } from './data-actions';
-import { Product, User } from '../../shared/domain';
+import { FavoritedProduct, Product, User } from '../../shared/domain';
 
 export interface DataReduxState {
   placeholder?: void;
   dashboardProducts?: Product[] | null;
   product?: Product | null;
   currentUser?: User | null;
-  userFavorites?: Product[] | null;
+  userFavorites?: FavoritedProduct[] | null;
 }
 
 const defaultDataState: DataReduxState = {};

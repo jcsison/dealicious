@@ -1,4 +1,11 @@
-import { Product, User, UserLogin, UserSignup } from '../../shared/domain';
+import {
+  FavoritedProduct,
+  Product,
+  User,
+  UserLogin,
+  UserSignup,
+  UUID
+} from '../../shared/domain';
 import { RootState, ThunkDispatch } from '../store';
 import { getHttp, postHttp } from './api-utils';
 import {
@@ -108,7 +115,7 @@ export const getNewUserThunk = (
   });
 };
 
-export const getFavoritesThunk = (userId: number) => async (
+export const getFavoritesThunk = (userId?: UUID) => async (
   dispatch: ThunkDispatch,
   getState: () => RootState
 ) => {
@@ -118,11 +125,16 @@ export const getFavoritesThunk = (userId: number) => async (
     errorState: 'userFavoritesError',
     successState: 'userFavoritesSuccess',
     tryBlock: async () => {
-      // TODO: Create the API for the favorites. Folder name: favorites. Each .ts will be a function (add, remove, get).
-      const products: Product[] = await getHttp('/api/dummy/favorites');
+      const currentUser = getState().DATA_REDUCER.currentUser;
 
-      if (products) {
-        dispatch(setUserFavoritesAction(products));
+      if (currentUser) {
+        const products: FavoritedProduct[] = await getHttp(
+          `/api/dummy/favorites/${userId ?? currentUser.id}`
+        );
+
+        if (products) {
+          dispatch(setUserFavoritesAction(products));
+        }
       }
     }
   });

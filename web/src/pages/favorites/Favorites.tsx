@@ -6,18 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavBar } from '../../shared/components/NavBar';
 import { ProductCard } from '../dashboard/components/ProductCard';
 import { RootState } from '../../redux/store';
-import { getProductsThunk } from '../../redux/thunk/thunks';
+import { getFavoritesThunk, getProductsThunk } from '../../redux/thunk/thunks';
 
 export const Favorites = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const products = useSelector(
-    (state: RootState) => state.DATA_REDUCER.dashboardProducts
+    (state: RootState) => state.DATA_REDUCER.userFavorites
   );
 
   useEffect(() => {
-    dispatch(getProductsThunk());
+    dispatch(getFavoritesThunk());
   }, []);
 
   return (

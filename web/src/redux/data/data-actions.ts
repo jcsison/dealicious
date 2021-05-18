@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-import { Product, User } from '../../shared/domain';
+import { FavoritedProduct, Product, User } from '../../shared/domain';
 
 export const PLACEHOLDER_A = 'PLACEHOLDER_A';
 export interface PlaceholderAction extends Action<typeof PLACEHOLDER_A> {
@@ -53,9 +53,11 @@ export const setCurrentUserAction = (user: User | null) => {
 export const SET_USER_FAVORITES_A = 'SET_USER_FAVORITES_A';
 export interface SetUserFavoritesAction
   extends Action<typeof SET_USER_FAVORITES_A> {
-  userFavorites: Product[] | null;
+  userFavorites: FavoritedProduct[] | null;
 }
-export const setUserFavoritesAction = (userFavorites: Product[] | null) => {
+export const setUserFavoritesAction = (
+  userFavorites: FavoritedProduct[] | null
+) => {
   return {
     type: SET_USER_FAVORITES_A,
     userFavorites: userFavorites

@@ -1,10 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  Favorite,
-  FavoritedProduct,
-  Product,
-  UUID
-} from '../../../../shared/domain';
+import { Favorite, UUID } from '../../../../shared/domain';
 
 import db from '../db';
 import { getDbItemById } from '../utils';
@@ -32,25 +27,6 @@ const addFavorite = (res: NextApiResponse, productId: UUID, userId: UUID) => {
   }
 };
 
-const getFavorites = (res: NextApiResponse, userId: UUID) => {
-  const favorites = db.favorites.filter(
-    (favorite) => favorite.userId === userId
-  );
-  const favoritedProducts = favorites.map((favorite: Favorite) => {
-    const product: Product = getDbItemById('products', favorite.productId);
-    const favoritedProduct: FavoritedProduct = {
-      ...product,
-      id: favorite.id,
-      productId: favorite.productId,
-      userId: favorite.userId
-    };
-
-    return favoritedProduct;
-  });
-
-  res.status(200).json(favoritedProducts);
-};
-
 const removeFavorite = (res: NextApiResponse, favoriteId: UUID) => {
   const favorite: Favorite = getDbItemById('favorites', favoriteId);
 
@@ -64,9 +40,6 @@ const removeFavorite = (res: NextApiResponse, favoriteId: UUID) => {
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
-    case 'GET':
-      getFavorites(res, req.body.userId);
-      break;
     case 'POST':
       addFavorite(res, req.body.userId, req.body.productId);
       break;

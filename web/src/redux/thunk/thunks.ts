@@ -1,4 +1,5 @@
 import {
+  Favorite,
   FavoritedProduct,
   Product,
   User,
@@ -139,4 +140,38 @@ export const getFavoritesThunk = (userId?: UUID) => async (
     }
   });
 };
-// TODO: Add in template functions for add/remove favorites thunk
+
+// TODO: Add in template functions for remove favorites thunk. Can I use one thunk to add/remove? (Pass in a bool to specify)
+export const addFavoriteThunk = (productId: UUID) => async (
+  dispatch: ThunkDispatch,
+  getState: () => RootState
+) => {
+  thunkCallStruct({
+    dispatch,
+    loadingState: 'addFavoriteLoading',
+    errorState: 'addFavoriteError',
+    successState: 'addFavoriteSuccess',
+    tryBlock: async () => {
+      const currentUser = getState().DATA_REDUCER.currentUser;
+
+      // If a user is logged in
+      if (currentUser) {
+        // Create a post request to update dummy API with new favorite
+        const favorite: Favorite = await postHttp('/api/dummy/favorites', {
+          productId: productId,
+          userId: currentUser.id
+        } as Favorite);
+
+        // Get updated list of favorited products using currently logged in user ID
+        const products: FavoritedProduct[] = await getHttp(
+          `/api/dummy/favorites/${currentUser.id}`
+        );
+
+        // Update store with new products
+        if (products) {
+          dispatch(setUserFavoritesAction(products));
+        }
+      }
+    }
+  });
+};

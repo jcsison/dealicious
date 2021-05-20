@@ -5,6 +5,7 @@ export interface DisplayLoadingState {
   userLoading?: boolean;
   newUserLoading?: boolean;
   userFavoritesLoading?: boolean;
+  addFavoriteLoading?: boolean;
 }
 
 export interface DisplayErrorState {
@@ -14,6 +15,7 @@ export interface DisplayErrorState {
   userError?: string | null;
   newUserError?: string | null;
   userFavoritesError?: string | null;
+  addFavoriteError?: string | null;
 }
 
 export interface DisplaySuccessState {
@@ -23,6 +25,7 @@ export interface DisplaySuccessState {
   userSuccess?: boolean;
   newUserSuccess?: boolean;
   userFavoritesSuccess?: boolean;
+  addFavoriteSuccess?: boolean;
 }
 
 export interface DisplayReduxState {

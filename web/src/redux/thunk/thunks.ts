@@ -8,7 +8,7 @@ import {
   UUID
 } from '../../shared/domain';
 import { RootState, ThunkDispatch } from '../store';
-import { getHttp, postHttp } from './api-utils';
+import { deleteHttp, getHttp, postHttp } from './api-utils';
 import {
   setCurrentUserAction,
   setDashboardProductsAction,
@@ -141,7 +141,6 @@ export const getFavoritesThunk = (userId?: UUID) => async (
   });
 };
 
-// TODO: Add in template functions for remove favorites thunk. Can I use one thunk to add/remove? (Pass in a bool to specify)
 export const addFavoriteThunk = (productId: UUID) => async (
   dispatch: ThunkDispatch,
   getState: () => RootState
@@ -157,20 +156,53 @@ export const addFavoriteThunk = (productId: UUID) => async (
       // If a user is logged in
       if (currentUser) {
         // Create a post request to update dummy API with new favorite
-        const favorite: Favorite = await postHttp('/api/dummy/favorites', {
-          productId: productId,
-          userId: currentUser.id
-        } as Favorite);
-
-        // Get updated list of favorited products using currently logged in user ID
-        const products: FavoritedProduct[] = await getHttp(
-          `/api/dummy/favorites/${currentUser.id}`
+        const favoritedProduct: FavoritedProduct = await postHttp(
+          '/api/dummy/favorites',
+          {
+            productId: productId,
+            userId: currentUser.id
+          } as Favorite
         );
 
+        const favoritedProducts = getState().DATA_REDUCER.userFavorites;
+        favoritedProducts.concat(favoritedProduct);
+
         // Update store with new products
-        if (products) {
-          dispatch(setUserFavoritesAction(products));
+        if (favoritedProduct) {
+          dispatch(setUserFavoritesAction(favoritedProducts));
         }
+      }
+    }
+  });
+};
+
+export const removeFavoriteThunk = (favoriteId: UUID) => async (
+  dispatch: ThunkDispatch,
+  getState: () => RootState
+) => {
+  thunkCallStruct({
+    dispatch,
+    loadingState: 'removeFavoriteLoading',
+    errorState: 'removeFavoriteError',
+    successState: 'removeFavoriteSuccess',
+    tryBlock: async () => {
+      const currentUser = getState().DATA_REDUCER.currentUser;
+
+      // If a user is logged in
+      if (currentUser) {
+        // Create a delete request to update dummy API with new favorite
+        await deleteHttp(`/api/dummy/favorites/${favoriteId}`);
+
+        const favoritedProducts = getState().DATA_REDUCER.userFavorites;
+
+        // Update store with new products
+        dispatch(
+          setUserFavoritesAction(
+            favoritedProducts.filter(
+              (favoritedProduct) => favoritedProduct.id !== favoriteId
+            )
+          )
+        );
       }
     }
   });

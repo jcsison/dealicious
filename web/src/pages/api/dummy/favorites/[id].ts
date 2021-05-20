@@ -28,10 +28,24 @@ const getFavorites = (res: NextApiResponse, userId: UUID) => {
   res.status(200).json(favoritedProducts);
 };
 
+const removeFavorite = (res: NextApiResponse, favoriteId: UUID) => {
+  const favorite: Favorite = getDbItemById('favorites', favoriteId);
+
+  if (favorite) {
+    db.favorites.filter((favorite) => favorite.id !== favoriteId);
+    res.status(200);
+  } else {
+    res.status(404).json({ message: 'Favorited product not found!' });
+  }
+};
+
 export default (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET':
       getFavorites(res, req.query.id as string);
+      break;
+    case 'DELETE':
+      removeFavorite(res, req.query.id as string);
       break;
     default:
       res.status(500);

@@ -16,9 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from graphene_django.views import GraphQLView
+from rest_framework import routers
+
+from favorite.views import FavoriteViewSet
+from product.views import ProductViewSet
+from user.views import UserViewSet
+
+router = routers.DefaultRouter()
+router.register("favorite", FavoriteViewSet)
+router.register("product", ProductViewSet)
+router.register("user", UserViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("product.urls")),
+    path("", include(router.urls)),
     path("graphql", GraphQLView.as_view(graphiql=True)),
+    path("api", include("rest_framework.urls", namespace="rest_framework")),
 ]

@@ -130,7 +130,7 @@ export const getFavoritesThunk = (userId?: UUID) => async (
 
       if (currentUser) {
         const products: FavoritedProduct[] = await getHttp(
-          `/api/dummy/favorites/${userId ?? currentUser.id}`
+          `/api/dummy/favorite/${userId ?? currentUser.id}`
         );
 
         if (products) {
@@ -157,7 +157,7 @@ export const addFavoriteThunk = (productId: UUID) => async (
       if (currentUser) {
         // Create a post request to update dummy API with new favorite
         const favoritedProduct: FavoritedProduct = await postHttp(
-          '/api/dummy/favorites',
+          '/api/dummy/favorite',
           {
             productId: productId,
             userId: currentUser.id
@@ -191,7 +191,7 @@ export const removeFavoriteThunk = (favoriteId: UUID) => async (
       // If a user is logged in
       if (currentUser) {
         // Create a delete request to update dummy API with new favorite
-        await deleteHttp(`/api/dummy/favorites/${favoriteId}`);
+        await deleteHttp(`/api/dummy/favorite/${favoriteId}`);
 
         const favoritedProducts = getState().DATA_REDUCER.userFavorites;
 

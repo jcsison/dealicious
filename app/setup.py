@@ -11,6 +11,8 @@ setup(
         "djangorestframework",
         "graphene-django",
         "pylint-django",
+        "python-dotenv",
+        "psycopg2",
         "wheel",
     ],
     scripts=["manage.py"],

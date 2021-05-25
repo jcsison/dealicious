@@ -42,7 +42,7 @@ export const getProductsThunk = () => async (
     errorState: 'dashboardProductsError',
     successState: 'dashboardProductsSuccess',
     tryBlock: async () => {
-      const products: Product[] = await getHttp('/api/dummy/product');
+      const products: Product[] = await getHttp('/api/product');
 
       if (products) {
         dispatch(setDashboardProductsAction(products));
@@ -61,7 +61,7 @@ export const getProductThunk = (productId: string) => async (
     errorState: 'productError',
     successState: 'productSuccess',
     tryBlock: async () => {
-      const product: Product = await getHttp(`/api/dummy/product/${productId}`);
+      const product: Product = await getHttp(`/api/product/${productId}`);
 
       if (product) {
         dispatch(setProductAction(product));
@@ -80,7 +80,7 @@ export const getUserThunk = (email: string, password: string) => async (
     errorState: 'userError',
     successState: 'userSuccess',
     tryBlock: async () => {
-      const user: User = await postHttp('/api/dummy/user/login', {
+      const user: User = await postHttp('/api/user/login', {
         email: email,
         password: password
       } as UserLogin);
@@ -105,7 +105,7 @@ export const getNewUserThunk = (
     errorState: 'newUserError',
     successState: 'newUserSuccess',
     tryBlock: async () => {
-      const newUser: User = await postHttp('/api/dummy/user/signup', {
+      const newUser: User = await postHttp('/api/user/signup', {
         first_name: firstName,
         last_name: lastName,
         email: email,
@@ -130,7 +130,7 @@ export const getFavoritesThunk = (userId?: UUID) => async (
 
       if (currentUser) {
         const products: FavoritedProduct[] = await getHttp(
-          `/api/dummy/favorite/${userId ?? currentUser.id}`
+          `/api/favorite/${userId ?? currentUser.id}`
         );
 
         if (products) {
@@ -157,7 +157,7 @@ export const addFavoriteThunk = (productId: UUID) => async (
       if (currentUser) {
         // Create a post request to update dummy API with new favorite
         const favoritedProduct: FavoritedProduct = await postHttp(
-          '/api/dummy/favorite',
+          '/api/favorite',
           {
             productId: productId,
             userId: currentUser.id
@@ -191,7 +191,7 @@ export const removeFavoriteThunk = (favoriteId: UUID) => async (
       // If a user is logged in
       if (currentUser) {
         // Create a delete request to update dummy API with new favorite
-        await deleteHttp(`/api/dummy/favorite/${favoriteId}`);
+        await deleteHttp(`/api/favorite/${favoriteId}`);
 
         const favoritedProducts = getState().DATA_REDUCER.userFavorites;
 

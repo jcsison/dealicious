@@ -56,7 +56,7 @@ export const NavBar = () => {
             <MenuItem onClick={() => router.push('/dashboard')}>
               Dashboard
             </MenuItem>
-            <MenuItem onClick={() => router.push('/favorites')}>
+            <MenuItem onClick={() => router.push('/favorite')}>
               Favorites
             </MenuItem>
             <MenuItem onClick={() => router.push('/settings')}>

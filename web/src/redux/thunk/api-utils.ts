@@ -1,3 +1,7 @@
+interface RequestOptions {
+  mock: boolean;
+}
+
 export class HttpError extends Error {
   status: number;
   constructor(message: string, status: number) {
@@ -8,8 +12,10 @@ export class HttpError extends Error {
   }
 }
 
-const _getHost = () => {
-  return window.location.hostname === 'localhost'
+const _getHost = (mock?: boolean) => {
+  return mock
+    ? 'http://localhost:3000'
+    : window.location.hostname === 'localhost'
     ? `http://localhost:${process.env.SERVER_PORT ?? '3000'}`
     : `http://${window.location.host}`;
 };
@@ -31,8 +37,8 @@ const _getToken = () => {
   return token;
 };
 
-export const getHttp = async (url_path: string) => {
-  const fullUrl = `${_getHost()}${url_path}`;
+export const getHttp = async (url_path: string, options?: RequestOptions) => {
+  const fullUrl = `${_getHost(options?.mock)}${url_path}`;
   const result = await fetch(fullUrl, {
     method: 'GET',
     headers: _getHeaders()
@@ -43,8 +49,11 @@ export const getHttp = async (url_path: string) => {
   return await result.json();
 };
 
-export const deleteHttp = async (url_path: string) => {
-  const fullUrl = `${_getHost()}${url_path}`;
+export const deleteHttp = async (
+  url_path: string,
+  options?: RequestOptions
+) => {
+  const fullUrl = `${_getHost(options?.mock)}${url_path}`;
   const result = await fetch(fullUrl, {
     method: 'DELETE',
     headers: _getHeaders()
@@ -55,8 +64,12 @@ export const deleteHttp = async (url_path: string) => {
   return await result;
 };
 
-export const postHttp = async (url_path: string, body: object) => {
-  const fullUrl = `${_getHost()}${url_path}`;
+export const postHttp = async (
+  url_path: string,
+  body: object,
+  options?: RequestOptions
+) => {
+  const fullUrl = `${_getHost(options?.mock)}${url_path}`;
   const result = await fetch(fullUrl, {
     method: 'POST',
     headers: _getHeaders({ 'Content-Type': 'application/json' }),
@@ -68,8 +81,12 @@ export const postHttp = async (url_path: string, body: object) => {
   return await result.json();
 };
 
-export const putHttp = async (url_path: string, body: object) => {
-  const fullUrl = `${_getHost()}${url_path}`;
+export const putHttp = async (
+  url_path: string,
+  body: object,
+  options?: RequestOptions
+) => {
+  const fullUrl = `${_getHost(options?.mock)}${url_path}`;
   const result = await fetch(fullUrl, {
     method: 'PUT',
     headers: _getHeaders({ 'Content-Type': 'application/json' }),

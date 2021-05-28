@@ -12,11 +12,13 @@ export class HttpError extends Error {
   }
 }
 
+const mockDebug = false;
+
 const _getHost = (mock?: boolean) => {
   return mock
     ? 'http://localhost:3000'
     : window.location.hostname === 'localhost'
-    ? `http://localhost:${process.env.SERVER_PORT ?? '3000'}`
+    ? `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT ?? '3000'}`
     : `http://${window.location.host}`;
 };
 

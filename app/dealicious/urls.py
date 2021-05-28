@@ -24,8 +24,8 @@ from user.views import UserViewSet
 
 router = routers.DefaultRouter()
 router.register("favorite", FavoriteViewSet)
-router.register("product", ProductViewSet)
-router.register("user", UserViewSet)
+router.register("api/product", ProductViewSet)
+router.register("api/user/login", UserViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

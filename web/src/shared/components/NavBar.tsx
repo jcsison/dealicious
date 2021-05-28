@@ -1,10 +1,14 @@
 import MenuIcon from '@material-ui/icons/Menu';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useRouter } from 'next/router';
 import {
+  Avatar,
   Box,
-  Button,
+  Drawer,
   IconButton,
+  List,
+  ListItem,
+  ListItemText,
   makeStyles,
   Menu,
   MenuItem,
@@ -12,26 +16,33 @@ import {
   Toolbar,
   Typography
 } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUserAction } from '../../redux/data/data-actions';
 import { setSuccessAction } from '../../redux/display/display-actions';
+import { RootState } from '../../redux/store';
 
 export const NavBar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [menuElement, setMenuElement] = React.useState<null | HTMLElement>(
-    null
+  const [drawerState, setDrawerState] = React.useState(false);
+
+  const [userMenuAnchor, setUserMenuAnchor] = React.useState(null);
+
+  const currentUser = useSelector(
+    (state: RootState) => state.DATA_REDUCER.currentUser?.first_name
   );
 
-  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setMenuElement(event.currentTarget);
+  const handleUserMenuClick = (event) => {
+    setUserMenuAnchor(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setMenuElement(null);
+  const handleUserMenuClose = () => {
+    setUserMenuAnchor(() => null);
   };
+
+  console.log(userMenuAnchor);
 
   const handleLogout = () => {
     dispatch(setCurrentUserAction(null));
@@ -39,33 +50,53 @@ export const NavBar = () => {
     router.push('/login');
   };
 
+  const toggleDrawer = (open: boolean) => {
+    setDrawerState(open);
+  };
+
   return (
     <>
+      <Menu
+        id="simple-menu"
+        anchorEl={userMenuAnchor}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center'
+        }}
+        keepMounted
+        open={Boolean(userMenuAnchor)}
+        onClose={handleUserMenuClose}
+      >
+        <MenuItem>Profile</MenuItem>
+        <MenuItem onClick={() => router.push('/settings')}>Settings</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      </Menu>
       <Toolbar className={classes.toolbar}>
-        <Box display="flex" alignItems="center">
-          <IconButton onClick={handleMenuClick} edge="start">
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            anchorEl={menuElement}
-            open={Boolean(menuElement)}
-            onClose={handleClose}
-          >
-            <MenuItem>Profile</MenuItem>
-            <MenuItem onClick={() => router.push('/dashboard')}>
-              Dashboard
-            </MenuItem>
-            <MenuItem onClick={() => router.push('/favorite')}>
-              Favorites
-            </MenuItem>
-            <MenuItem onClick={() => router.push('/settings')}>
-              Settings
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
-          <Typography variant="h6">NavBar</Typography>
+        <Box width="100%" display="flex" justifyContent="space-between">
+          <Box display="flex" alignItems="center">
+            <IconButton onClick={() => toggleDrawer(true)} edge="start">
+              <MenuIcon />
+            </IconButton>
+          </Box>
+          <Box pr={2.5}>
+            <Box
+              onClick={handleUserMenuClick}
+              display="flex"
+              alignItems="center"
+            >
+              <Box pr={1.5}>
+                <Avatar></Avatar>
+              </Box>
+              <Typography variant="h6">Hello, {currentUser}</Typography>
+            </Box>
+          </Box>
         </Box>
+
         {/*router.pathname === '/favorites' ? (
           <Button onClick={() => router.push('/dashboard')} variant="contained">
             Go To Dashboard
@@ -76,6 +107,34 @@ export const NavBar = () => {
           </Button>
         )*/}
       </Toolbar>
+      <Drawer
+        anchor="left"
+        open={drawerState}
+        onClose={() => toggleDrawer(false)}
+      >
+        <div
+          className={classes.list}
+          role="presentation"
+          onClick={() => toggleDrawer(false)}
+        >
+          <List>
+            <ListItem
+              button
+              key="Dashboard"
+              onClick={() => router.push('/dashboard')}
+            >
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+            <ListItem
+              button
+              key="Favorites"
+              onClick={() => router.push('/favorite')}
+            >
+              <ListItemText primary="Favorites" />
+            </ListItem>
+          </List>
+        </div>
+      </Drawer>
     </>
   );
 };
@@ -86,5 +145,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     paddingRight: 7
+  },
+  list: {
+    width: 250
   }
 }));

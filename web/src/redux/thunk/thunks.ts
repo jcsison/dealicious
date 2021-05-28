@@ -42,7 +42,9 @@ export const getProductsThunk = () => async (
     errorState: 'dashboardProductsError',
     successState: 'dashboardProductsSuccess',
     tryBlock: async () => {
-      const products: Product[] = await getHttp('/api/product');
+      const products: Product[] = await getHttp('/api/product', {
+        mock: true
+      });
 
       if (products) {
         dispatch(setDashboardProductsAction(products));
@@ -61,7 +63,9 @@ export const getProductThunk = (productId: string) => async (
     errorState: 'productError',
     successState: 'productSuccess',
     tryBlock: async () => {
-      const product: Product = await getHttp(`/api/product/${productId}`);
+      const product: Product = await getHttp(`/api/product/${productId}`, {
+        mock: true
+      });
 
       if (product) {
         dispatch(setProductAction(product));
@@ -80,10 +84,16 @@ export const getUserThunk = (email: string, password: string) => async (
     errorState: 'userError',
     successState: 'userSuccess',
     tryBlock: async () => {
-      const user: User = await postHttp('/api/user/login', {
-        email: email,
-        password: password
-      } as UserLogin);
+      const user: User = await postHttp(
+        '/api/user/login',
+        {
+          email: email,
+          password: password
+        } as UserLogin,
+        {
+          mock: true
+        }
+      );
 
       if (user) {
         dispatch(setCurrentUserAction(user));
@@ -105,13 +115,19 @@ export const getNewUserThunk = (
     errorState: 'newUserError',
     successState: 'newUserSuccess',
     tryBlock: async () => {
-      const newUser: User = await postHttp('/api/user/signup', {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-        date_of_birth: dateOfBirth
-      } as UserSignup);
+      const newUser: User = await postHttp(
+        '/api/user/signup',
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: password,
+          date_of_birth: dateOfBirth
+        } as UserSignup,
+        {
+          mock: true
+        }
+      );
     }
   });
 };
@@ -130,7 +146,10 @@ export const getFavoritesThunk = (userId?: UUID) => async (
 
       if (currentUser) {
         const products: FavoritedProduct[] = await getHttp(
-          `/api/favorite/${userId ?? currentUser.id}`
+          `/api/favorite/${userId ?? currentUser.id}`,
+          {
+            mock: true
+          }
         );
 
         if (products) {
@@ -161,7 +180,10 @@ export const addFavoriteThunk = (productId: UUID) => async (
           {
             productId: productId,
             userId: currentUser.id
-          } as Favorite
+          } as Favorite,
+          {
+            mock: true
+          }
         );
 
         const favoritedProducts = getState().DATA_REDUCER.userFavorites;
@@ -191,7 +213,9 @@ export const removeFavoriteThunk = (favoriteId: UUID) => async (
       // If a user is logged in
       if (currentUser) {
         // Create a delete request to update dummy API with new favorite
-        await deleteHttp(`/api/favorite/${favoriteId}`);
+        await deleteHttp(`/api/favorite/${favoriteId}`, {
+          mock: true
+        });
 
         const favoritedProducts = getState().DATA_REDUCER.userFavorites;
 

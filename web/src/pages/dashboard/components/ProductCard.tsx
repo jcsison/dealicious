@@ -60,9 +60,6 @@ export const ProductCard = ({ product }: ProductData) => {
           </CardActionArea>
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              {product?.description}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
               Price: {product?.price}
             </Typography>
           </CardContent>
@@ -84,7 +81,7 @@ export const ProductCard = ({ product }: ProductData) => {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph>Product description.</Typography>
+              <Typography paragraph>{product?.description}</Typography>
             </CardContent>
           </Collapse>
         </Card>

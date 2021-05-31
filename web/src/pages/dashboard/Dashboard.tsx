@@ -216,7 +216,7 @@ export const Dashboard = () => {
               >
                 {products?.map((data, index) => {
                   return (
-                    <Box key={index + data.name} p={2}>
+                    <Box key={index + data.name} p={2} maxWidth={250}>
                       <ProductCard product={data} />
                     </Box>
                   );

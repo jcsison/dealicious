@@ -117,7 +117,7 @@ export const Login = () => {
                 </Box>
               </form>
               <Box display="flex" justifyContent="center">
-                <Link variant="subtitle2" href="#">
+                <Link href="/forgotpassword" variant="subtitle2">
                   Forgot password?
                 </Link>
               </Box>

@@ -12,10 +12,10 @@ export class HttpError extends Error {
   }
 }
 
-const mockDebug = false;
+const mockDebug = true;
 
 const _getHost = (mock?: boolean) => {
-  return mock
+  return mock || mockDebug
     ? 'http://localhost:3000'
     : window.location.hostname === 'localhost'
     ? `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT ?? '3000'}`
@@ -27,16 +27,16 @@ const _getHeaders = (inputHeaders?: { [key: string]: string }) => {
   headers['Accept'] = 'application/json';
   const headersWithAuth = _getToken()
     ? {
-        ...headers,
-        Authorization: `Bearer ${_getToken()}`
+        ...headers
+        //Authorization: `Bearer ${_getToken()}`
       }
     : headers;
   return headersWithAuth;
 };
 
 const _getToken = () => {
-  const token: string | null = localStorage.getItem('token');
-  return token;
+  //const token: string | null = localStorage.getItem('token');
+  return null;
 };
 
 export const getHttp = async (url_path: string, options?: RequestOptions) => {

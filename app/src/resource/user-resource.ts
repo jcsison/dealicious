@@ -16,9 +16,20 @@ const userResourceDefinition = (deps: ResourceDeps) => ({
     } else {
       res.status(404).send({ message: 'User not found.' });
     }
+  },
+
+  userSignup: async (req: Request, res: Response) => {
+    const result = await deps.userService.registerUser(req.body);
+
+    if (result) {
+      res.status(200).send(result);
+    } else {
+      res.status(500).send({ message: 'User registration failed.' });
+    }
   }
 });
 
 export const userResource = createController(userResourceDefinition)
-  .prefix('/user')
-  .post('/login', 'loginUser', { before: express.json() });
+  .prefix('/api/user')
+  .post('/login', 'loginUser', { before: express.json() })
+  .post('/signup', 'userSignup', { before: express.json() });

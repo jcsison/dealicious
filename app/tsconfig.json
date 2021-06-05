@@ -20,5 +20,6 @@
     "strictNullChecks": false,
     "target": "es6"
   },
-  "include": ["src/**/*", "__tests__/**/*"]
+  "include": ["src/**/*", "__tests__/**/*"],
+  "exclude": ["src/database/**/*.js"]
 }

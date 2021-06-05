@@ -39,8 +39,5 @@ yarn-error.log*
 # sqlite
 db.sqlite3
 
-# migrations
-**/migrations
-
 # pycache
 **/__pycache__

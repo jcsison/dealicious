@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "dealiciousdbuser",
+    "password": null,
+    "database": "dealiciousdb",
+    "host": "db.sqlite3",
+    "dialect": "sqlite"
+  },
+  "production": {
+    "username": "dealiciousdbuser",
+    "password": null,
+    "database": "dealiciousdb",
+    "host": "db.sqlite3",
+    "dialect": "sqlite"
+  }
+}

@@ -17,8 +17,7 @@ const userResourceDefinition = (deps: ResourceDeps) => ({
       res.status(404).send({ message: 'User not found.' });
     }
   },
-
-  userSignup: async (req: Request, res: Response) => {
+  signupUser: async (req: Request, res: Response) => {
     const result = await deps.userService.registerUser(req.body);
 
     if (result) {
@@ -26,10 +25,20 @@ const userResourceDefinition = (deps: ResourceDeps) => ({
     } else {
       res.status(500).send({ message: 'User registration failed.' });
     }
+  },
+  deleteUser: async (req: Request, res: Response) => {
+    const result = await deps.userService.deleteUser(req.params.userId);
+
+    if (result) {
+      res.status(200).send(result);
+    } else {
+      res.status(500).send({ message: 'User deletion failed.' });
+    }
   }
 });
 
 export const userResource = createController(userResourceDefinition)
   .prefix('/api/user')
   .post('/login', 'loginUser', { before: express.json() })
-  .post('/signup', 'userSignup', { before: express.json() });
+  .post('/signup', 'signupUser', { before: express.json() })
+  .delete('/delete/:userId', 'deleteUser');

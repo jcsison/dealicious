@@ -12,7 +12,8 @@ import { DomainError } from './error';
 import { UNAUTHORIZED_ERROR } from './resource/validate-or-throw';
 import { awilixContainer } from './di-container';
 
-const IS_PROD = process.env.IS_PRODUCTION !== undefined;
+export const IS_PROD = process.env.IS_PRODUCTION !== undefined;
+
 const app = express();
 const logger = log4js.getLogger('app');
 

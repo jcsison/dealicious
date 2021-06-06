@@ -1,4 +1,5 @@
 import { asFunction, asValue, createContainer } from 'awilix';
+import * as uuid from 'uuid';
 
 import { favoriteRepository } from './data/favorite/favorite-repository';
 import { favoriteService } from './data/favorite/favorite-service';
@@ -10,6 +11,7 @@ import { userService } from './data/user/user-service';
 
 export const awilixContainer = createContainer().register({
   sequelize: asValue(sequelize),
+  uuid: asValue(uuid),
   favoriteRepository: asFunction(favoriteRepository),
   favoriteService: asFunction(favoriteService),
   productRepository: asFunction(productRepository),

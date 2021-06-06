@@ -18,7 +18,7 @@ describe('user api', () => {
     expect(loginRes).to.have.status(200);
   });
 
-  it('registers a user', async () => {
+  it('registers, then deletes a user', async () => {
     const signupRes = await chai
       .request(process.env.SERVER_BASE_URL)
       .post('/api/user/signup')
@@ -31,5 +31,11 @@ describe('user api', () => {
       });
 
     expect(signupRes).to.have.status(200);
+
+    const deleteRes = await chai
+      .request(process.env.SERVER_BASE_URL)
+      .delete(`/api/user/delete/${signupRes.body.id}`);
+
+    expect(deleteRes).to.have.status(200);
   });
 });

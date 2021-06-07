@@ -1,7 +1,20 @@
-export interface ProductService {}
+import { Product, UUID } from '../../../../web/src/shared/domain';
+import { ProductRepository } from './product-repository';
 
-interface ProductServiceDeps {}
+export interface ProductService {
+  getProducts(): Promise<Product[] | null>;
+  getProductById(productId: UUID): Promise<Product | null>;
+}
 
-export const productService = (
-  _deps: ProductServiceDeps
-): ProductService => ({});
+interface ProductServiceDeps {
+  productRepository: ProductRepository;
+}
+
+export const productService = (deps: ProductServiceDeps): ProductService => ({
+  getProducts: async () => {
+    return deps.productRepository.getProducts();
+  },
+  getProductById: async (productId: UUID) => {
+    return deps.productRepository.getProductById(productId);
+  }
+});

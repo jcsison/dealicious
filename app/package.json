@@ -13,7 +13,13 @@
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest",
     "test:watch": "jest --watch",
-    "sequelize": "sequelize-cli"
+    "sequelize": "sequelize-cli",
+    "migrate": "sequelize-cli db:migrate",
+    "seed": "sequelize-cli db:seed:all",
+    "redo-seed": "sequelize-cli db:seed:undo:all && sequelize-cli db:seed:all",
+    "redo-migrate": "sequelize-cli db:seed:undo:all && sequelize-cli db:migrate:undo:all && sequelize-cli db:migrate && sequelize-cli db:seed:all",
+    "undo-migrate": "sequelize-cli db:seed:undo:all && sequelize-cli db:migrate:undo:all",
+    "undo-seed": "sequelize-cli db:seed:undo:all"
   },
   "dependencies": {
     "awilix": "^4.3.4",

@@ -12,6 +12,7 @@ describe('product api', () => {
       .get('/api/product/');
 
     expect(getProductsRes).to.have.status(200);
+    expect(getProductsRes.body.length).to.be.greaterThan(0);
 
     const sampleProduct = getProductsRes.body[0];
 
@@ -30,7 +31,7 @@ describe('product api', () => {
 
     expect(getProductRes).to.have.status(200);
 
-    const sampleProduct = getProductRes.body
+    const sampleProduct = getProductRes.body;
 
     expect(sampleProduct.id).to.be.a('string');
     expect(sampleProduct.created_at).to.be.a('string');

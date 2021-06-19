@@ -7,11 +7,23 @@ chai.use(chaiHttp);
 
 describe('favorite api', () => {
   it('gets user favorites', async () => {
+    let testUserId = '75a16b5d-14fd-4ca8-9af8-b8d0164e7c88';
     const favoriteRes = await chai
       .request(process.env.SERVER_BASE_URL)
-      .get('/api/favorite/75a16b5d-14fd-4ca8-9af8-b8d0164e7c88');
+      .get(`/api/favorite/${testUserId}`);
 
     expect(favoriteRes).to.have.status(200);
+
+    for (let favorite of favoriteRes.body) {
+      expect(favorite.userId).to.equal(testUserId);
+    }
+
+    let sampleFavorite = favoriteRes.body[0];
+
+    expect(sampleFavorite.id).to.be.a('string');
+    expect(sampleFavorite.created_at).to.be.a('string');
+    expect(sampleFavorite.productId).to.be.a('string');
+    expect(sampleFavorite.userId).to.be.a('string');
   });
 
   it('adds a user favorite', async () => {

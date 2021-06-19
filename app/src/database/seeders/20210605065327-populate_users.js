@@ -8,7 +8,7 @@ module.exports = {
         email: 'test@test.com',
         first_name: 'John',
         last_name: 'Builder',
-        date_of_birth: ''
+        date_of_birth: '2021-06-19 00:44:17'
       }
     ]);
   },

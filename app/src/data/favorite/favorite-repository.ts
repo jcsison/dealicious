@@ -20,8 +20,8 @@ export const favoriteRepository = (
 ): FavoriteRepository => ({
   getFavorites: async (userId: UUID) => {
     const favorites: Favorite[] = await deps.sequelize.query(
-      'SELECT * FROM users WHERE id=:id',
-      { replacements: { id: userId }, type: QueryTypes.SELECT }
+      'SELECT * FROM favorites WHERE userId=:userId',
+      { replacements: { userId: userId }, type: QueryTypes.SELECT }
     );
 
     return favorites.length > 0 ? favorites : null;

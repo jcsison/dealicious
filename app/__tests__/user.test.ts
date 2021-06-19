@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { UserSignup } from '../../web/src/shared/domain';
+import { User, UserSignup } from '../../web/src/shared/domain';
 
 const expect = chai.expect;
 
@@ -18,15 +18,16 @@ describe('user api', () => {
 
     expect(loginRes).to.have.status(200);
 
-    let loggedInUser = loginRes.body;
+    const loggedInUser: User = loginRes.body;
 
-    expect(loggedInUser.email).to.equal(process.env.TEST_USER_EMAIL);
     expect(loggedInUser.id).to.be.a('string');
     expect(loggedInUser.created_at).to.be.a('string');
+    expect(loggedInUser.email).to.equal(process.env.TEST_USER_EMAIL);
     expect(loggedInUser.first_name).to.be.a('string');
     expect(loggedInUser.last_name).to.be.a('string');
 
-    let dob = new Date(loggedInUser.date_of_birth);
+    const dob = new Date(loggedInUser.date_of_birth);
+
     expect(dob.toString()).to.not.equal('Invalid Date');
   });
 
@@ -46,12 +47,12 @@ describe('user api', () => {
 
     expect(signupRes).to.have.status(200);
 
-    expect(signupRes.body.email).to.equal(newUser.email);
-    expect(signupRes.body.first_name).to.equal(newUser.first_name);
-    expect(signupRes.body.last_name).to.equal(newUser.last_name);
-    expect(signupRes.body.date_of_birth).to.equal(
-      newUser.date_of_birth.toJSON()
-    );
+    const signupUser: User = signupRes.body;
+
+    expect(signupUser.email).to.equal(newUser.email);
+    expect(signupUser.first_name).to.equal(newUser.first_name);
+    expect(signupUser.last_name).to.equal(newUser.last_name);
+    expect(signupUser.date_of_birth).to.equal(newUser.date_of_birth.toJSON());
 
     const deleteRes = await chai
       .request(process.env.SERVER_BASE_URL)

@@ -2,9 +2,10 @@ export type UUID = string;
 
 interface DBModel {
   id: UUID;
+  created_at: Date;
 }
 
-export interface UserInput {
+export interface User extends DBModel {
   first_name: string;
   last_name: string;
   email: string;
@@ -19,9 +20,7 @@ export interface UserLogin extends UserAuth {
   email: string;
 }
 
-export interface UserSignup extends UserInput, UserAuth {}
-
-export interface User extends UserInput, DBModel {}
+export type UserSignup = Omit<User, keyof DBModel> & UserAuth;
 
 export interface Product extends DBModel {
   name: string;
@@ -35,4 +34,4 @@ export interface Favorite extends DBModel {
   userId: UUID;
 }
 
-export interface FavoritedProduct extends Product, Favorite {}
+export type FavoritedProduct = Favorite & Product;

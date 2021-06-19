@@ -50,7 +50,7 @@ export const userRepository = (deps: UserRepositoryDeps): UserRepository => ({
     return users.length > 0 ? users[0] : null;
   },
   registerUser: async (userSignup: UserSignup) => {
-    const newUser: User = {
+    const newUser: Omit<User, 'created_at'> = {
       id: deps.uuid.v4(),
       first_name: userSignup.first_name,
       last_name: userSignup.last_name,

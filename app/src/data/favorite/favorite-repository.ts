@@ -28,7 +28,7 @@ export const favoriteRepository = (
   },
 
   addFavorite: async (favoriteToAdd: Favorite) => {
-    const newFavorite: Favorite = {
+    const newFavorite: Omit<Favorite, 'created_at'> = {
       id: deps.uuid.v4(),
       productId: favoriteToAdd.productId,
       userId: favoriteToAdd.userId

@@ -13,7 +13,7 @@ describe('product api', () => {
 
     expect(getProductsRes).to.have.status(200);
 
-    let sampleProduct = getProductsRes.body[0];
+    const sampleProduct = getProductsRes.body[0];
 
     expect(sampleProduct.id).to.be.a('string');
     expect(sampleProduct.created_at).to.be.a('string');
@@ -30,11 +30,13 @@ describe('product api', () => {
 
     expect(getProductRes).to.have.status(200);
 
-    expect(getProductRes.body.id).to.be.a('string');
-    expect(getProductRes.body.created_at).to.be.a('string');
-    expect(getProductRes.body.name).to.be.a('string');
-    expect(getProductRes.body.description).to.be.a('string');
-    expect(getProductRes.body.price).to.be.a('number');
-    expect(getProductRes.body.image_url).to.be.a('string');
+    const sampleProduct = getProductRes.body
+
+    expect(sampleProduct.id).to.be.a('string');
+    expect(sampleProduct.created_at).to.be.a('string');
+    expect(sampleProduct.name).to.be.a('string');
+    expect(sampleProduct.description).to.be.a('string');
+    expect(sampleProduct.price).to.be.a('number');
+    expect(sampleProduct.image_url).to.be.a('string');
   });
 });

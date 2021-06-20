@@ -14,16 +14,10 @@ export const getUserThunk = (email: string, password: string) => async (
     errorState: 'userError',
     successState: 'userSuccess',
     tryBlock: async () => {
-      const user: User = await postHttp(
-        '/api/user/login',
-        {
-          email: email,
-          password: password
-        } as UserLogin,
-        {
-          mock: true
-        }
-      );
+      const user: User = await postHttp('/api/user/login', {
+        email: email,
+        password: password
+      } as UserLogin);
 
       if (user) {
         dispatch(setCurrentUserAction(user));

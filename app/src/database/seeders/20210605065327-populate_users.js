@@ -9,6 +9,13 @@ module.exports = {
         first_name: 'John',
         last_name: 'Builder',
         date_of_birth: '2021-06-19 00:44:17'
+      },
+      {
+        id: '1a9aaf6b-01ca-40e6-acf9-584ae4475adb',
+        email: 'john.doe@test.com',
+        first_name: 'John',
+        last_name: 'Doe',
+        date_of_birth: '2021-06-20 00:44:17'
       }
     ]);
   },

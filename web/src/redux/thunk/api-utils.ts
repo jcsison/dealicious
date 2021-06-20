@@ -12,7 +12,7 @@ export class HttpError extends Error {
   }
 }
 
-const mockDebug = true;
+const mockDebug = false;
 
 const _getHost = (mock?: boolean) => {
   return mock || mockDebug
@@ -27,8 +27,8 @@ const _getHeaders = (inputHeaders?: { [key: string]: string }) => {
   headers['Accept'] = 'application/json';
   const headersWithAuth = _getToken()
     ? {
-        ...headers
-        //Authorization: `Bearer ${_getToken()}`
+        ...headers,
+        Authorization: `Bearer ${_getToken()}`
       }
     : headers;
   return headersWithAuth;

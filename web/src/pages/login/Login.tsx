@@ -34,6 +34,9 @@ export const Login = () => {
   const userLoginSuccess = useSelector(
     (state: RootState) => state.DISPLAY_REDUCER.displaySuccess.userSuccess
   );
+  const userLoginError = useSelector(
+    (state: RootState) => state.DISPLAY_REDUCER.displayError.userError
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -104,6 +107,13 @@ export const Login = () => {
                     size="small"
                   />
                 </Box>
+                {userLoginError && (
+                  <Box display="flex" justifyContent="center" pb={1}>
+                    <Typography variant="body1" color="error">
+                      Email or Password is incorrect.
+                    </Typography>
+                  </Box>
+                )}
                 <Divider />
                 <Box display="flex" justifyContent="center" m={1.5}>
                   <Button

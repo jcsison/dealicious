@@ -54,6 +54,12 @@ export const thunkCallStruct: (props: ThunkCallStructProps) => void = async ({
       }
 
       dispatch(setErrorAction(errorState, e.errors[0].message));
+    } else if (errorState && e.message) {
+      if (!noAlert) {
+        // TODO: call snackbar alert
+      }
+
+      dispatch(setErrorAction(errorState, e.message));
     }
   }
 };

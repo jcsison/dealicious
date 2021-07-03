@@ -39,19 +39,13 @@ export const getNewUserThunk = (
     errorState: 'newUserError',
     successState: 'newUserSuccess',
     tryBlock: async () => {
-      const newUser: User = await postHttp(
-        '/api/user/signup',
-        {
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          password: password,
-          date_of_birth: dateOfBirth
-        } as UserSignup,
-        {
-          mock: true
-        }
-      );
+      const newUser: User = await postHttp('/api/user/signup', {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password,
+        date_of_birth: dateOfBirth
+      } as UserSignup);
     }
   });
 };

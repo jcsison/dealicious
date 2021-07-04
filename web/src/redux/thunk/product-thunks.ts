@@ -17,9 +17,7 @@ export const getProductsThunk = () => async (
     errorState: 'dashboardProductsError',
     successState: 'dashboardProductsSuccess',
     tryBlock: async () => {
-      const products: Product[] = await getHttp('/api/product', {
-        mock: true
-      });
+      const products: Product[] = await getHttp('/api/product');
 
       if (products) {
         dispatch(setDashboardProductsAction(products));
@@ -38,9 +36,7 @@ export const getProductThunk = (productId: string) => async (
     errorState: 'productError',
     successState: 'productSuccess',
     tryBlock: async () => {
-      const product: Product = await getHttp(`/api/product/${productId}`, {
-        mock: true
-      });
+      const product: Product = await getHttp(`/api/product/${productId}`);
 
       if (product) {
         dispatch(setProductAction(product));

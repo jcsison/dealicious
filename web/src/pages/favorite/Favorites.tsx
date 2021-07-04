@@ -7,14 +7,25 @@ import { NavBar } from '../../shared/components/NavBar';
 import { ProductCard } from '../dashboard/components/ProductCard';
 import { RootState } from '../../redux/store';
 import { getFavoritesThunk, getProductsThunk } from '../../redux/thunk/thunks';
+import { Product } from '../../shared/domain';
 
 export const Favorites = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const products = useSelector(
+  const favoritedProducts = useSelector(
     (state: RootState) => state.DATA_REDUCER.userFavorites
   );
+
+  const products: Product[] = favoritedProducts
+    ? favoritedProducts.map((favoritedProduct) => ({
+        id: favoritedProduct.productId,
+        name: favoritedProduct.name,
+        description: favoritedProduct.description,
+        price: favoritedProduct.price,
+        created_at: favoritedProduct.created_at
+      }))
+    : [];
 
   useEffect(() => {
     dispatch(getFavoritesThunk());

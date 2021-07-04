@@ -20,6 +20,11 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Product } from '../../../shared/domain';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import {
+  addFavoriteThunk,
+  removeFavoriteThunk
+} from '../../../redux/thunk/favorite-thunks';
 
 interface ProductData {
   product?: Product;
@@ -28,10 +33,16 @@ interface ProductData {
 export const ProductCard = ({ product }: ProductData) => {
   const classes = useStyles();
   const router = useRouter();
+  const dispatch = useDispatch();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleFavorite = () => {
+    dispatch(addFavoriteThunk(product.id));
+    //dispatch(removeFavoriteThunk(product.id));
   };
 
   return (
@@ -64,7 +75,7 @@ export const ProductCard = ({ product }: ProductData) => {
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
+            <IconButton aria-label="add to favorites" onClick={handleFavorite}>
               <FavoriteIcon />
             </IconButton>
             <IconButton aria-label="share">

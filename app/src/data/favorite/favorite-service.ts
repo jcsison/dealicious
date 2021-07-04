@@ -1,10 +1,14 @@
-import { Favorite, UUID } from '../../../../web/src/shared/domain';
+import {
+  Favorite,
+  FavoritedProduct,
+  UUID
+} from '../../../../web/src/shared/domain';
 import { FavoriteRepository } from './favorite-repository';
 
 export interface FavoriteService {
-  getFavorites(userId: UUID): Promise<Favorite[] | null>;
+  getFavorites(userId: UUID): Promise<FavoritedProduct[] | null>;
   addFavorite(favoriteToAdd: Favorite): Promise<void>;
-  removeFavorite(favoriteToRemove: UUID): Promise<void>;
+  removeFavorite(productIdToRemove: UUID, userId: UUID): Promise<void>;
 }
 
 interface FavoriteServiceDeps {
@@ -20,7 +24,7 @@ export const favoriteService = (
   addFavorite: async (favoriteToAdd: Favorite) => {
     await deps.favoriteRepository.addFavorite(favoriteToAdd);
   },
-  removeFavorite: async (favoriteId: UUID) => {
-    await deps.favoriteRepository.removeFavorite(favoriteId);
+  removeFavorite: async (productId: UUID, userId: UUID) => {
+    await deps.favoriteRepository.removeFavorite(productId, userId);
   }
 });

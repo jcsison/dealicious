@@ -23,7 +23,10 @@ const favoriteResourceDefinition = (deps: ResourceDeps) => ({
     res.status(200).send({});
   },
   removeFavorite: async (req: Request, res: Response) => {
-    await deps.favoriteService.removeFavorite(req.params.favoriteId);
+    await deps.favoriteService.removeFavorite(
+      req.params.productId,
+      req.params.userId
+    );
 
     res.status(200).send({});
   }
@@ -33,4 +36,4 @@ export const userResource = createController(favoriteResourceDefinition)
   .prefix('/api/favorite')
   .get('/:userId', 'getFavorites')
   .post('/', 'addFavorite', { before: express.json() })
-  .delete('/remove/:favoriteId', 'removeFavorite');
+  .delete('/:userId/:productId', 'removeFavorite');

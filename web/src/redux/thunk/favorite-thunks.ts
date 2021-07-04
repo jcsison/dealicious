@@ -18,10 +18,7 @@ export const getFavoritesThunk = (userId?: UUID) => async (
 
       if (currentUser) {
         const products: FavoritedProduct[] = await getHttp(
-          `/api/favorite/${userId ?? currentUser.id}`,
-          {
-            mock: true
-          }
+          `/api/favorite/${userId ?? currentUser.id}`
         );
 
         if (products) {
@@ -52,10 +49,7 @@ export const addFavoriteThunk = (productId: UUID) => async (
           {
             productId: productId,
             userId: currentUser.id
-          } as Favorite,
-          {
-            mock: true
-          }
+          } as Favorite
         );
 
         const favoritedProducts = getState().DATA_REDUCER.userFavorites;
@@ -70,7 +64,7 @@ export const addFavoriteThunk = (productId: UUID) => async (
   });
 };
 
-export const removeFavoriteThunk = (favoriteId: UUID) => async (
+export const removeFavoriteThunk = (productId: UUID) => async (
   dispatch: ThunkDispatch,
   getState: () => RootState
 ) => {
@@ -85,20 +79,20 @@ export const removeFavoriteThunk = (favoriteId: UUID) => async (
       // If a user is logged in
       if (currentUser) {
         // Create a delete request to update dummy API with new favorite
-        await deleteHttp(`/api/favorite/${favoriteId}`, {
-          mock: true
-        });
+        await deleteHttp(`/api/favorite/${currentUser.id}/${productId}`);
 
         const favoritedProducts = getState().DATA_REDUCER.userFavorites;
 
         // Update store with new products
-        dispatch(
-          setUserFavoritesAction(
-            favoritedProducts.filter(
-              (favoritedProduct) => favoritedProduct.id !== favoriteId
+        if (favoritedProducts) {
+          dispatch(
+            setUserFavoritesAction(
+              favoritedProducts.filter(
+                (favoritedProduct) => favoritedProduct.productId !== productId
+              )
             )
-          )
-        );
+          );
+        }
       }
     }
   });
